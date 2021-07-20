@@ -1,0 +1,90 @@
+#profileContainer {
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    position: relative;
+    margin-top: 90px;
+    margin-bottom: 100px;
+}
+
+#addPostContainer {
+    position: fixed;
+    bottom: 40px;
+    text-align: center;
+    justify-content: center;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#addPostContainer button {
+    padding: 0px 7rem;
+    font-size: 2.6rem;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid grey;
+    color: #202020;
+    cursor: pointer;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+
+#addPostContainer button:hover {
+    padding: 0px 8rem;
+}
+
+#profileInfoContainer {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    margin-right: 100px;
+}
+
+.profileImage {
+    margin-right: 5rem;
+}
+
+.profileImage img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profileInfo {
+    text-align: left;
+}
+
+.profileInfo span {
+    margin-right: 12px;
+}
+
+#postsContainer {
+    text-align: center;
+    margin: 2rem 10%;
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.postContainer {
+    margin: 10px;
+    flex-grow: 1;
+}
+
+.postContainer img {
+    width: 300px;
+    height: 250px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+}
+
+.postContainer img:hover {
+    opacity: 0.5;
+}

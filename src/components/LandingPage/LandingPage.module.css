@@ -1,0 +1,82 @@
+#wrapper {
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+    background: linear-gradient(132deg, #FC415A, #FFF, #EE82EE);
+    background-size: 400% 400%;
+    animation: Gradient 10s ease infinite;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    margin: 0px;
+    -webkit-animation: Gradient 10s ease infinite;
+}
+
+@keyframes Gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#titleContainer {
+    z-index: 1;
+    margin-top: 16vw;
+    font-size: 5rem;
+    color: #fff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    cursor: default;
+}
+
+.highlightOne {
+    color: black;
+    font-family: 'Dancing Script', cursive;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+
+.highlightTwo {
+    color: purple;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+    font-family: 'Klavika';
+}
+
+#buttonContainer {
+    margin-top: 40px;
+}
+
+#buttonContainer button {
+    font-size: 2rem;
+    padding: 8px 25px;
+    border: 1px solid #52006A;
+    color: #52006A;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 1px 30px 0 rgba(82, 0, 106, 0.6), 0 0px 5px 0 rgba(82, 0, 106, 0.6);
+    cursor: pointer;
+    transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+}
+
+#buttonContainer button:hover {
+    box-shadow: 0 1px 30px 0 rgba(255, 0, 255, 0.6), 0 0px 5px 0 rgba(255, 0, 255, 0.6);
+    color: rgb(255, 0, 255, 0.6);
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}

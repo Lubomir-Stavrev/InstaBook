@@ -1,0 +1,40 @@
+#menuContainer {
+    font-size: 1.3rem;
+    float: right;
+    position: fixed;
+    right: 0;
+    width: 30vw;
+    height: 100vh;
+    margin-top: 56px;
+    border-left: 1px solid grey;
+    border-top: 1px solid purple;
+    background-color: #f3f3f3;
+}
+
+#profileInfo {
+    padding-left: 30px;
+}
+
+#profileInfo h2 {
+    color: #52006a;
+}
+
+#menuContainer .friendList {
+    text-align: left;
+    overflow-y: scroll;
+    max-height: 450px;
+}
+
+#menuContainer .friendList::-webkit-scrollbar {
+    display: none;
+}
+
+.friendList span {
+    display: block;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+.friendList span:hover {
+    background-color: #d7d8da;
+}
