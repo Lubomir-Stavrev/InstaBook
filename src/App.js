@@ -12,10 +12,10 @@ function App() {
 		<Fragment>
 			<Switch>
 				<Route path="/" exact component={LandingPage} />
-				<Route path="/home" exact component={Home} />
-				<Route path="/profile" exact component={Profile} />
 				<Route path="/login" exact component={Login} />
 				<Route path="/register" exact component={Register} />
+				<Route path="/home" exact component={Home} />
+				<Route path="/profile" exact component={Profile} />
 			</Switch>
 		</Fragment>
 	);

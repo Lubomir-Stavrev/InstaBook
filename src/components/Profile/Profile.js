@@ -3,6 +3,13 @@ import profileStyle from "./Profile.module.css";
 import Header from "../Header/Header.js";
 
 function Profile() {
+	function activePostElement(e) {
+		e.preventDefault();
+		e.target.innerHTML = e.target.innerHTML === "+" ? "-" : "+";
+		let postContainer = e.target.parentNode.firstChild;
+		postContainer.style.display =
+			postContainer.style.display === "none" ? "block" : "none";
+	}
 	return (
 		<Fragment>
 			<Header />
@@ -61,7 +68,38 @@ function Profile() {
 					</div>
 				</div>
 				<div id={profileStyle.addPostContainer}>
-					<button type="">+</button>
+					<div style={{ display: "none" }} id={profileStyle.addPost}>
+						<form action="">
+							<label htmlFor="username">Post Title</label>
+							<input
+								name="postTitle"
+								placeholder="...."
+								type="text"
+							/>
+							<br />
+							<label htmlFor="email">Post Description</label>
+							<input
+								name="postDescription"
+								placeholder=".........."
+								type="text"
+							/>
+							<br />
+							<label htmlFor="imageUrl">Img Url</label>
+							<input
+								type="url"
+								placeholder="https://randomImage.jpg"
+								name="imageUrl"
+							/>
+							<br />
+							<button className="defaultButton" type="submit">
+								Post
+							</button>
+							<br />
+						</form>
+					</div>
+					<button onClick={(event) => activePostElement(event)}>
+						+
+					</button>
 				</div>
 			</div>
 		</Fragment>

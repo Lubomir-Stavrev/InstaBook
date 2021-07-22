@@ -88,3 +88,36 @@
 .postContainer img:hover {
     opacity: 0.5;
 }
+
+#addPost {
+    border: #202020 solid 1px;
+    width: 70vw;
+    height: 33vw;
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+#addPost form label {
+    text-align: center;
+    display: block;
+    font-size: calc(22pt - 9pt);
+    margin-top: calc(2rem - 10px);
+}
+
+#addPost form input {
+    margin-top: 2%;
+    margin-bottom: 3%;
+    font-family: inherit;
+    border: 0;
+    outline: 0;
+    font-size: calc(1.5rem - 10px);
+    transition: border-color 0.2s;
+    -webkit-transition: border-color 0.2s;
+    -moz-transition: border-color 0.2s;
+    -ms-transition: border-color 0.2s;
+    -o-transition: border-color 0.2s;
+    width: calc(46% + 55px);
+    border-bottom: 1.5px solid #EE82EE;
+    color: #dc00dc;
+    background: none;
+}

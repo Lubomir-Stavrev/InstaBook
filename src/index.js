@@ -7,11 +7,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import { store } from "./redux/configStore.js";
 import { Provider } from "react-redux";
+import history from "./components/history";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<Router>
+			<Router history={history}>
 				<App />
 			</Router>
 		</Provider>
