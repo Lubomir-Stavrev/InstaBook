@@ -40,7 +40,11 @@ function Profile({ history }) {
 						/>
 					</div>
 					<div className={profileStyle.profileInfo}>
-						<h2>Lubomir Stavrev</h2>
+						<h2>
+							{services.getCurrentUserData()
+								? services.getCurrentUserData().username
+								: "No username error"}
+						</h2>
 						<span>14 posts</span>
 						<span>104 followers</span>
 						<span>56 following</span>

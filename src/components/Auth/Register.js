@@ -11,6 +11,7 @@ function Register({ history }) {
 	function handleRegister(e) {
 		e.preventDefault();
 
+		let registerUsername = e.target.username;
 		let registerEmail = e.target.email;
 		let registerPassword = e.target.password;
 		let registerRePassword = e.target.rePassword;
@@ -19,6 +20,18 @@ function Register({ history }) {
 			registerPassword.value = "";
 			registerRePassword.value = "";
 			setErrorMessage("Passwords should match!");
+			return;
+		}
+		if (!registerUsername.value) {
+			setErrorMessage("You should fill in the username field!");
+			return;
+		} else if (
+			registerUsername.value.lenght <= 3 ||
+			registerUsername.value.lenght >= 10
+		) {
+			setErrorMessage(
+				"The username should be at least 4 and no more than 9 inclusive!"
+			);
 			return;
 		}
 
@@ -30,7 +43,11 @@ function Register({ history }) {
 		}
 
 		service
-			.register(registerEmail.value, registerPassword.value)
+			.register(
+				registerUsername.value,
+				registerEmail.value,
+				registerPassword.value
+			)
 			.then((res) => {
 				if (res?.err) {
 					console.log(res.err.message);

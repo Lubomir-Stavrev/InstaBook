@@ -1,10 +1,15 @@
 import sideMenuStyle from "./SideMenu.module.css";
+import services from "../../server/services";
 
 export default () => {
 	return (
 		<div id={sideMenuStyle.menuContainer}>
 			<div id={sideMenuStyle.profileInfo}>
-				<h2>Lubomir Stavrev</h2>
+				<h2>
+					{services.getCurrentUserData()
+						? services.getCurrentUserData().username
+						: "No username error"}
+				</h2>
 			</div>
 			<div className={sideMenuStyle.friendList}>
 				<span>Hester Duncan</span>

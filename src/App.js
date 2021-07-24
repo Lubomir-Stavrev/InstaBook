@@ -17,7 +17,6 @@ function App() {
 				<Route path="/register" exact component={Register} />
 				<Route path="/home" exact component={Home} />
 				<Route path="/profile" exact component={Profile} />
-				<Route path="/posts/:param" exact component={PostDetails} />
 			</Switch>
 		</Fragment>
 	);

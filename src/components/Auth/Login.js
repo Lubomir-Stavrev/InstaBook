@@ -11,19 +11,8 @@ function Login({ history }) {
 
 		let loginEmail = e.target.email.value;
 		let loginPassword = e.target.password.value;
-		let loginUsername = e.target.username.value;
-		if (loginUsername.length < 4) {
-			setErrorMessage(
-				"The username should be at least 4 characters long!"
-			);
-			return;
-		} else if (loginUsername.length > 13) {
-			setErrorMessage(
-				"The username should be no more than 13 characters long!"
-			);
-			return;
-		}
-		service.login(loginEmail, loginPassword, loginUsername).then((res) => {
+
+		service.login(loginEmail, loginPassword).then((res) => {
 			if (res?.err) {
 				console.log(res.err.message);
 				setErrorMessage(res.err.message);
@@ -43,14 +32,6 @@ function Login({ history }) {
 			<form
 				className={authStyle.formDefault}
 				onSubmit={(e) => handleLogin(e)}>
-				<label htmlFor="username">Username</label>
-				<input
-					className={authStyle.inputDefault}
-					name="username"
-					placeholder="pesho"
-					type="text"
-				/>
-				<br />
 				<label htmlFor="email">Email</label>
 				<input
 					className={authStyle.inputDefault}

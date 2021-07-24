@@ -1,6 +1,7 @@
 import headerStyle from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
+import services from "../../server/services";
 
 export default () => {
 	const [dropDownCondition, setDropDownCondition] = useState("none");
@@ -33,7 +34,7 @@ export default () => {
 					/>
 				</div>
 				<div id={headerStyle.options}>
-					<Link to="/">
+					<Link to="/home">
 						<span>Home</span>
 					</Link>
 					<span>Messages</span>
@@ -54,7 +55,7 @@ export default () => {
 					<li>Friends</li>
 				</Link>
 				<hr />
-				<Link to="/logout">
+				<Link onClick={(e) => services.signOut()} to="/">
 					<li>Sign Out</li>
 				</Link>
 			</div>
