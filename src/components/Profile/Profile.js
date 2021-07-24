@@ -1,14 +1,32 @@
 import { Fragment } from "react";
 import profileStyle from "./Profile.module.css";
 import Header from "../Header/Header.js";
+import services from "../../server/services";
 
-function Profile() {
+function Profile({ history }) {
 	function activePostElement(e) {
 		e.preventDefault();
 		e.target.innerHTML = e.target.innerHTML === "+" ? "-" : "+";
 		let postContainer = e.target.parentNode.firstChild;
 		postContainer.style.display =
 			postContainer.style.display === "none" ? "block" : "none";
+	}
+
+	function handlePost(e) {
+		e.preventDefault();
+		let title = e.target.postTitle.value;
+		let description = e.target.postDescription.value;
+		let imageUrl = e.target.imageUrl.value;
+
+		services.makePost(title, description, imageUrl).then((res) => {
+			if (res?.err) {
+				console.log(res.err.message);
+
+				return;
+			}
+			e.target.parentNode.style.display = "none";
+			return history.push("/profile");
+		});
 	}
 	return (
 		<Fragment>
@@ -69,7 +87,7 @@ function Profile() {
 				</div>
 				<div id={profileStyle.addPostContainer}>
 					<div style={{ display: "none" }} id={profileStyle.addPost}>
-						<form action="">
+						<form action="" onSubmit={(e) => handlePost(e)}>
 							<label htmlFor="username">Post Title</label>
 							<input
 								name="postTitle"

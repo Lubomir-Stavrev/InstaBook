@@ -24,6 +24,7 @@
     .postContainer .postContant {
         border-bottom: 1px solid #52006A;
         height: 71.5%;
+        cursor: pointer;
     }
     
     .postContant img {
@@ -33,6 +34,10 @@
         height: 356px;
         border-top: 1px solid #52006A;
         border-bottom: 1px solid #52006A;
+    }
+    
+    .postContainer .postContant:hover {
+        opacity: 0.5;
     }
     
     .postContainer .postFeed {

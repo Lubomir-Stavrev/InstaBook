@@ -42,5 +42,34 @@ export default {
         }
         return false;
     },
-    signOut() { localStorage.removeItem('auth'); }
+    signOut() { localStorage.removeItem('auth'); },
+    makePost(title, description, imageUrl) {
+
+        return fetch(db + '.json', {
+            method: 'POST',
+            body: JSON.stringify({
+                title,
+                description,
+                imageUrl,
+                uid: JSON.parse(localStorage.getItem('auth')).uid
+            })
+        }).then(res => res.json());
+    },
+    async getAllPosts() {
+
+        let allPosts = [];
+        await fetch(db + '.json')
+            .then(res => res.json())
+            .then(data => {
+                Object.entries(data).forEach(el => {
+
+                    el[1].postId = el[0];
+                    allPosts.push(el[1])
+
+                })
+            });
+        let usersPosts = await Object.assign({}, allPosts);
+        return await usersPosts;
+
+    },
 }

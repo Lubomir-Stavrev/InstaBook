@@ -1,6 +1,31 @@
 import mainContantStyle from "./MainContant.module.css";
+import { Fragment, useEffect, useState } from "react";
+import { Link, Switch, Route } from "react-router-dom";
+import services from "../../server/services";
 
 export default () => {
+	const [allPosts, setAllPosts] = useState([]);
+
+	useEffect(() => {
+		async function setPosts() {
+			let data = await getAllPosts();
+			if (data) {
+				setAllPosts(data);
+			}
+		}
+		setPosts();
+	}, []);
+
+	function getAllPosts() {
+		return services
+			.getAllPosts()
+			.then((res) => {
+				return res;
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
 	return (
 		<div id={mainContantStyle.mainContainer}>
 			<div id={mainContantStyle.stories}>
@@ -28,98 +53,49 @@ export default () => {
 				<div></div>
 				<div></div>
 				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
 			</div>
 			<div id={mainContantStyle.postsContainer}>
-				<div className={mainContantStyle.postContainer}>
-					<div>Posted by: LbomirStavrev</div>
-					<div className={mainContantStyle.postContant}>
-						<img
-							src="https://randomwordgenerator.com/img/picture-generator/50e8d2444a4faa0df7c5d57bc32f3e7b1d3ac3e456587049722b79d59e_640.jpg"
-							alt=""
-						/>
+				{Object.keys(allPosts).length !== 0 ? (
+					Object.entries(allPosts).map((el) => {
+						return (
+							<div
+								key={el[0]}
+								className={mainContantStyle.postContainer}>
+								<div>Posted by: {el[1].title}</div>
+								<Link
+									className="linkWithoutStyle"
+									to={`/posts/${el[1].postId}`}>
+									<div
+										className={
+											mainContantStyle.postContant
+										}>
+										<img src={el[1].imageUrl} alt="" />
+									</div>
+								</Link>
+								<div className={mainContantStyle.postFeed}>
+									<div>
+										<i className="fa fa-thumbs-up"></i>
+									</div>
+									<div>
+										<i className="fa fa-thumbs-down"></i>
+									</div>
+									<div></div>
+								</div>
+								<div
+									className={mainContantStyle.commentSection}>
+									<input
+										type="text"
+										placeholder="Add a comment..."
+									/>
+								</div>
+							</div>
+						);
+					})
+				) : (
+					<div /* className={profile.emptyPageContainer} */>
+						<h1>No Rotines Yet!</h1>
 					</div>
-					<div className={mainContantStyle.postFeed}>
-						<div>
-							<i className="fa fa-thumbs-up"></i>
-						</div>
-						<div>
-							<i className="fa fa-thumbs-down"></i>
-						</div>
-						<div></div>
-					</div>
-					<div className={mainContantStyle.commentSection}>
-						<input type="text" placeholder="Add a comment..." />
-					</div>
-				</div>
-				<div className={mainContantStyle.postContainer}>
-					<div>Posted by: LbomirStavrev</div>
-					<div className={mainContantStyle.postContant}>
-						<img
-							src="https://randomwordgenerator.com/img/picture-generator/54e6d4454851a814f1dc8460962e33791c3ad6e04e507440762879dc974fcd_640.jpg"
-							alt=""
-						/>
-					</div>
-					<div className={mainContantStyle.postFeed}>
-						<div>
-							<i className="fa fa-thumbs-up"></i>
-						</div>
-						<div>
-							<i className="fa fa-thumbs-down"></i>
-						</div>
-						<div></div>
-					</div>
-					<div className={mainContantStyle.commentSection}>
-						<input type="text" placeholder="Add a comment..." />
-					</div>
-				</div>
-				<div className={mainContantStyle.postContainer}>
-					<div>Posted by: LbomirStavrev</div>
-					<div className={mainContantStyle.postContant}>
-						<img
-							src="https://randomwordgenerator.com/img/picture-generator/5fe3d7444d52b10ff3d8992cc12c30771037dbf85257714b752d72dd964f_640.jpg"
-							alt=""
-						/>
-					</div>
-					<div className={mainContantStyle.postFeed}>
-						<div>
-							<i className="fa fa-thumbs-up"></i>
-						</div>
-						<div>
-							<i className="fa fa-thumbs-down"></i>
-						</div>
-						<div></div>
-					</div>
-					<div className={mainContantStyle.commentSection}>
-						<input type="text" placeholder="Add a comment..." />
-					</div>
-				</div>
-				<div className={mainContantStyle.postContainer}>
-					<div>Posted by: LbomirStavrev</div>
-					<div className={mainContantStyle.postContant}>
-						<img
-							src="https://randomwordgenerator.com/img/picture-generator/57e3d6424351ad14f1dc8460962e33791c3ad6e04e507440772d7cdd9144c4_640.jpg"
-							alt=""
-						/>
-					</div>
-					<div className={mainContantStyle.postFeed}>
-						<div>
-							<i className="fa fa-thumbs-up"></i>
-						</div>
-						<div>
-							<i className="fa fa-thumbs-down"></i>
-						</div>
-						<div></div>
-					</div>
-					<div className={mainContantStyle.commentSection}>
-						<input type="text" placeholder="Add a comment..." />
-					</div>
-				</div>
+				)}
 			</div>
 		</div>
 	);

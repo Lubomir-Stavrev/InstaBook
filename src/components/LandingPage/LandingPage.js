@@ -1,6 +1,7 @@
 import landingPageStyle from "./LandingPage.module.css";
 import { Link } from "react-router-dom";
 import { Fragment } from "react";
+import services from "../../server/services";
 
 export default () => {
 	return (
@@ -15,9 +16,15 @@ export default () => {
 					<span className={landingPageStyle.highlightTwo}>Book</span>.
 				</div>
 				<div id={landingPageStyle.buttonContainer}>
-					<Link to="/login">
-						<button>Next »</button>
-					</Link>
+					{services.isLogged() ? (
+						<Link to="/home">
+							<button>Next »</button>
+						</Link>
+					) : (
+						<Link to="/login">
+							<button>Next »</button>
+						</Link>
+					)}
 				</div>
 			</div>
 		</Fragment>
