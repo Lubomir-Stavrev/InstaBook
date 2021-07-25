@@ -129,3 +129,23 @@
         -ms-border-radius: 100%;
         -o-border-radius: 100%;
     }
+    
+    .userContainer span {
+        margin-left: 20px;
+        font-size: 1.4rem;
+        text-decoration: underline;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        color: #52006a;
+        transition: 0.5s;
+        -webkit-transition: 0.5s;
+        -moz-transition: 0.5s;
+        -ms-transition: 0.5s;
+        -o-transition: 0.5s;
+    }
+    
+    .userContainer span:hover {
+        color: rgb(255, 0, 255, 1);
+        box-shadow: 0px 100px 100px 0px rgb(255, 0, 255, 0.1), 0px 10px 20px 4px rgb(255, 0, 255, 0.7);
+        margin-left: 23px;
+        letter-spacing: 0.2em !important;
+    }

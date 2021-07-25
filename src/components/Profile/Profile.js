@@ -1,9 +1,21 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import profileStyle from "./Profile.module.css";
 import Header from "../Header/Header.js";
 import services from "../../server/services";
 
 function Profile({ history }) {
+	const [profilePosts, setProfilePosts] = useState({});
+
+	useEffect(() => {
+		async function setProfile() {
+			let data = await services.getCurrentUserPosts();
+			if (data) {
+				setProfilePosts(data);
+			}
+		}
+		setProfile();
+	}, []);
+
 	function activePostElement(e) {
 		e.preventDefault();
 		e.target.innerHTML = e.target.innerHTML === "+" ? "-" : "+";
@@ -24,6 +36,9 @@ function Profile({ history }) {
 
 				return;
 			}
+			services.getCurrentUserPosts().then((data) => {
+				setProfilePosts(data);
+			});
 			e.target.parentNode.style.display = "none";
 			return history.push("/profile");
 		});
@@ -52,42 +67,19 @@ function Profile({ history }) {
 					</div>
 				</div>
 				<div id={profileStyle.postsContainer}>
-					<div className={profileStyle.postContainer}>
-						<img
-							src="https://randomwordgenerator.com/img/picture-generator/54e5d4444c57af14f1dc8460962e33791c3ad6e04e507441722a72dc924ac5_640.jpg"
-							alt=""
-						/>
-					</div>
-					<div className={profileStyle.postContainer}>
-						<img
-							src="https://randomwordgenerator.com/img/picture-generator/55e3d3404c57a914f1dc8460962e33791c3ad6e04e507440702d79d39f44cc_640.jpg"
-							alt=""
-						/>
-					</div>
-					<div className={profileStyle.postContainer}>
-						<img
-							src="https://randomwordgenerator.com/img/picture-generator/57e2d74a4251b10ff3d8992cc12c30771037dbf85254794177277dd3934c_640.jpg"
-							alt=""
-						/>
-					</div>
-					<div className={profileStyle.postContainer}>
-						<img
-							src="https://randomwordgenerator.com/img/picture-generator/5fe2d5474352b10ff3d8992cc12c30771037dbf852547941762a7ed79f44_640.jpg"
-							alt=""
-						/>
-					</div>
-					<div className={profileStyle.postContainer}>
-						<img
-							src="https://randomwordgenerator.com/img/picture-generator/yns-plt-6dJ4fApKPk8-unsplash.jpg"
-							alt=""
-						/>
-					</div>
-					<div className={profileStyle.postContainer}>
-						<img
-							src="https://randomwordgenerator.com/img/picture-generator/57e0dd414a56a414f1dc8460962e33791c3ad6e04e50744172297bd49749cc_640.jpg"
-							alt=""
-						/>
-					</div>
+					{profilePosts ? (
+						Object.entries(profilePosts).map((el) => (
+							<div
+								key={el[0]}
+								className={profileStyle.postContainer}>
+								<img src={el[1].imageUrl} alt="" />
+							</div>
+						))
+					) : (
+						<div>
+							<h1>No POSTS</h1>
+						</div>
+					)}
 				</div>
 				<div id={profileStyle.addPostContainer}>
 					<div style={{ display: "none" }} id={profileStyle.addPost}>

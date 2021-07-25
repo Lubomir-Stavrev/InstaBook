@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage/LandingPage.js";
 import Home from "./components/Pages/Home.js";
 import Profile from "./components/Profile/Profile.js";
+import ViewUserProfile from "./components/Profile/ViewUserProfile.js";
 import Login from "./components/Auth/Login.js";
 import Register from "./components/Auth/Register.js";
 import PostDetails from "./components/Pages/PostDetails.js";
@@ -17,6 +18,7 @@ function App() {
 				<Route path="/register" exact component={Register} />
 				<Route path="/home" exact component={Home} />
 				<Route path="/profile" exact component={Profile} />
+				<Route path="/profile/:uid" exact component={ViewUserProfile} />
 			</Switch>
 		</Fragment>
 	);

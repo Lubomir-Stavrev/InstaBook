@@ -13,13 +13,15 @@ export default {
                 fetch(db + '/users/.json')
                     .then(res => res.json())
                     .then(userData => {
-                        Object.values(userData)
+                        Object.entries(userData)
                             .forEach(userElement => {
-                                if (userElement.uid === data.user.uid) {
+                                if (userElement[1].uid === data.user.uid) {
+                                    console.log(userElement[0])
                                     localStorage.setItem('auth', JSON.stringify({
                                         uid: data.user.uid,
                                         email,
-                                        username: userElement.username
+                                        username: userElement[1].username,
+                                        userDbKey: userElement[0]
                                     }));
                                 }
                             })
@@ -34,7 +36,7 @@ export default {
 
         return await userModel.createUserWithEmailAndPassword(email, password)
             .then(async function(data) {
-                console.log(data.user.uid);
+
                 await fetch(usersURL, {
                     method: 'POST',
                     body: JSON.stringify({
@@ -60,14 +62,27 @@ export default {
     makePost(title, description, imageUrl) {
 
         return fetch(db + '.json', {
-            method: 'POST',
-            body: JSON.stringify({
-                title,
-                description,
-                imageUrl,
-                uid: JSON.parse(localStorage.getItem('auth')).uid
+                method: 'POST',
+                body: JSON.stringify({
+                    title,
+                    description,
+                    imageUrl,
+                    uid: JSON.parse(localStorage.getItem('auth')).uid,
+                    username: this.getCurrentUserData().username
+                })
+            }).then(data => {
+                return fetch(db + `users/${this.getCurrentUserData().userDbKey}/posts/.json`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        title,
+                        description,
+                        imageUrl,
+                        uid: JSON.parse(localStorage.getItem('auth')).uid,
+                        username: this.getCurrentUserData().username
+                    })
+                })
             })
-        }).then(res => res.json());
+            .then(res => res.json());
     },
     async getAllPosts() {
 
@@ -85,7 +100,9 @@ export default {
 
                     }
                     el[1].postId = el[0];
-                    allPosts.push(el[1])
+                    if (el[1].uid !== this.getCurrentUserData().uid) {
+                        allPosts.push(el[1])
+                    }
 
                 })
             });
@@ -100,6 +117,7 @@ export default {
                 uid: JSON.parse(localStorage.getItem('auth')).uid,
                 email: JSON.parse(localStorage.getItem('auth')).email,
                 username: JSON.parse(localStorage.getItem('auth')).username,
+                userDbKey: JSON.parse(localStorage.getItem('auth')).userDbKey,
 
             }
         }
@@ -136,5 +154,26 @@ export default {
                 })
                 return { isAlreadyLiked: isLiked };
             });
+    },
+    getProfile(id) {
+        return fetch(db + `users/.json`)
+            .then(res => res.json())
+            .then(allUsers => {
+                let userToReturn;
+                Object.values(allUsers)
+                    .forEach(user => {
+                        if (user.uid === id) {
+                            userToReturn = user;
+                        }
+                    })
+                return userToReturn;
+            })
+    },
+    getCurrentUserPosts() {
+        return fetch(db + `users/${this.getCurrentUserData().userDbKey}/posts/.json`)
+            .then(res => res.json())
+            .then(data => {
+                return data;
+            })
     }
 }

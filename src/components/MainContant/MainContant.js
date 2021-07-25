@@ -83,7 +83,14 @@ export default () => {
 								<div
 									key={el[1].postId}
 									className={mainContantStyle.postContainer}>
-									<div>Posted by: {el[1].title}</div>
+									<div
+										className={
+											mainContantStyle.userContainer
+										}>
+										<Link to={`/profile/${el[1].uid}`}>
+											<span>{el[1].username}</span>
+										</Link>
+									</div>
 
 									<div
 										className={
