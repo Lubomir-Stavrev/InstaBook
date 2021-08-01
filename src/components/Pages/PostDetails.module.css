@@ -1,26 +1,87 @@
-#detailsContainer {
-    border: 1px solid black;
+#detailsWrapper {
     position: fixed;
-    bottom: 30px;
-    text-align: center;
-    justify-content: center;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60rem;
-    height: 35rem;
-    background-color: rgba(255, 255, 255, 0.8);
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
+    bottom: 0px;
+    top: 0px;
+    width: 100%;
+    margin: 0;
+    background-color: rgba(var(--jb7, 0, 0, 0), .5);
+    z-index: 1000;
+}
+
+#detailsContainer {
+    box-shadow: 0 1px 30px 0 rgba(255, 0, 255, 0.6), 0 0px 5px 0 rgba(255, 0, 255, 0.6);
+    margin-left: 16.9%;
+    top: 45px;
+    position: fixed;
+    background-color: #fff;
+    display: flex;
+}
+
+.rightInfo {
+    display: block;
 }
 
 .detailsHeader {
-    border-bottom: 1px solid black;
+    text-align: left;
+    margin-left: 1.8em;
+    margin-top: 5px;
+}
+
+.detailsHeader span {
+    font-size: 1.5rem;
 }
 
 .contentWrapper img {
-    width: 730px;
-    height: 360px;
+    width: 590px;
+    height: 510px;
     object-fit: cover;
+}
+
+.detailsContainer .postDetailsFeed {
+    background-color: #ffff;
+    display: flex;
+    border-bottom: 1px solid #000;
+    display: block;
+}
+
+.postDetailsFeed div {
+    text-align: left;
+    margin-right: 1.2em;
+    padding-left: 12px;
+    font-size: 1.6rem;
+    border-bottom: 1px solid #000;
+}
+
+.postDetailsFeed div i {
+    display: inline !important;
+}
+
+.postDetailsFeed div i:hover {
+    color: purple;
+}
+
+.commentsDetailsContainer {
+    text-align: left;
+    margin-top: 6px;
+    margin-left: 2em;
+}
+
+.commentsDetailsContainer input {
+    outline: none;
+    border: none;
+    width: 80%;
+    font-size: 1.4rem;
+    bottom: 0;
+    padding-top: 12px;
+}
+
+.commentDetailsSection {
+    max-height: 355px;
+    height: 355px;
+    overflow-y: scroll;
+    margin-bottom: 15px;
+}
+
+.commentDetailsSection span {
+    display: block;
 }

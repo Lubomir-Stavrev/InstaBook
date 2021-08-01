@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import statesReducer from "./states";
+import postStateReducer from "./postState";
 
 
 export const store = configureStore({
     reducer: {
-        states: statesReducer,
+        postState: postStateReducer,
 
     }
 })

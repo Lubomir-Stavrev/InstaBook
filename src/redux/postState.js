@@ -2,16 +2,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
 
-export const statesSlice = createSlice({
-    name: 'states',
+export const postStateSlice = createSlice({
+    name: 'postState',
     initialState: {
-        count: 0,
-        lastCommentIndex: 0
+        viewState: "none"
 
     },
     reducers: {
-        increment: (state) => {
-            state.count += 1
+        increment: (state, action) => {
+            state.viewState = action.payload
         },
         incrementComment: (state) => {
             state.lastCommentIndex += 5
@@ -26,6 +25,6 @@ export const statesSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementComment, incrementByAmount } = statesSlice.actions
+export const { increment, decrement, incrementComment, incrementByAmount } = postStateSlice.actions
 
-export default statesSlice.reducer
+export default postStateSlice.reducer

@@ -175,5 +175,59 @@ export default {
             .then(data => {
                 return data;
             })
+    },
+    sendComment(idPost, comment) {
+
+        return fetch(db + `${idPost}/commentSection.json`, {
+            method: 'POST',
+            body: JSON.stringify({
+
+                comment,
+                profileEmail: this.getCurrentUserData().email,
+                profileName: this.getCurrentUserData().username,
+                profileDbKey: this.getCurrentUserData().userDbKey,
+
+
+            })
+        }).then(res => res.json())
+
+    },
+    async getAllComments(idPost) {
+        let comments = [];
+        await fetch(db + `${idPost}/commentSection.json`)
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    Object.entries(data).forEach(el => {
+                        comments.push({
+                            comment: el[1].comment,
+                            profileEmail: el[1].profileEmail,
+                            profileName: el[1].profileName,
+                            profileDbKey: el[1].profileDbKey,
+
+                        })
+                    })
+                }
+            })
+        return await comments;
+    },
+    getPostFromUser(userId, postId) {
+
+        console.log(postId);
+        return fetch(db + `users/.json`)
+            .then(res => res.json())
+            .then(users => {
+                let postInfo = {};
+                Object.entries(users).forEach(user => {
+                    if (user[1].uid == userId) {
+                        Object.entries(user[1].posts).forEach(post => {
+                            if (post[0] == postId) {
+                                postInfo = post
+                            }
+                        })
+                    }
+                })
+                return postInfo
+            })
     }
 }

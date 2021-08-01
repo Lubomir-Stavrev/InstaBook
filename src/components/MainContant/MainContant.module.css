@@ -5,7 +5,7 @@
         display: block;
         float: left;
         margin-top: 100px;
-        margin-left: 100px;
+        margin-left: calc(15% - 90px);
     }
     
     #mainContainer .postContainer {
@@ -22,7 +22,6 @@
     }
     
     .postContainer .postContant {
-        border-bottom: 1px solid #52006A;
         height: 53.5%;
         cursor: default;
     }
@@ -32,23 +31,26 @@
         max-height: 356px;
         width: 650px;
         height: 356px;
-        border-top: 1px solid #52006A;
-        border-bottom: 1px solid #52006A;
+        border-top: 1px solid grey;
+        border-bottom: 1px solid grey;
     }
     
     .postContainer .postFeed {
         background-color: #ffff;
-        height: 10%;
         display: flex;
-        border-bottom: 1px solid #000;
     }
     
     .postFeed div {
-        margin-right: 10rem;
-        margin-left: 7.5rem;
+        margin-right: 0.1rem;
+        margin-left: 1.4rem;
         color: grey;
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin-top: 12px;
+        cursor: pointer;
+    }
+    
+    .postFeed div:not(.postFeed div:first-child) {
+        margin-top: 16px;
     }
     
     .postFeed div i {
@@ -66,14 +68,14 @@
     .commentsContainer {
         text-align: left;
         margin-top: 10px;
-        margin-left: 20px;
     }
     
     .commentsContainer input {
         outline: none;
         border: none;
-        width: 80%;
+        width: 87%;
         font-size: 1.5rem;
+        padding-left: 10px;
     }
     
     .commentSection {
@@ -81,6 +83,7 @@
         height: 145px;
         overflow-y: scroll;
         margin-bottom: 15px;
+        margin-left: 19px;
     }
     
     .commentSection span {
@@ -148,4 +151,19 @@
         box-shadow: 0px 100px 100px 0px rgb(255, 0, 255, 0.1), 0px 10px 20px 4px rgb(255, 0, 255, 0.7);
         margin-left: 23px;
         letter-spacing: 0.2em !important;
+    }
+    
+    .commentSection .noCommentsMessage {
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    
+    @media only screen and (max-width: 600px) {
+        #mainContainer {
+            margin-left: auto;
+        }
+        #stories {
+            position: fixed;
+            top: 45px;
+        }
     }

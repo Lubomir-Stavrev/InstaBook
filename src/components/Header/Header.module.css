@@ -11,8 +11,7 @@
 }
 
 #title {
-    margin-left: 160px;
-    margin-right: 200px;
+    margin: 0 auto;
     text-align: left;
     cursor: default;
     color: #52006A;
@@ -34,13 +33,13 @@
 }
 
 #searchContainer {
+    margin: 0 auto;
     margin-top: 15px;
-    margin-right: 220px;
     text-align: center;
 }
 
 #searchContainer .search {
-    padding: 5px 25px;
+    padding: 5px calc(20px - 5px);
     border-radius: 20px;
     border: 1px solid #52006A;
     transition: 0.5s;
@@ -66,9 +65,12 @@
 }
 
 #options {
+    margin: 0 auto;
     margin-top: 20px;
+    right: 0;
     color: #52006A;
-    font-size: 1.1em;
+    font-size: 1.2em;
+    display: inline-block;
 }
 
 #options span {
@@ -109,7 +111,7 @@
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-    margin-right: 5rem;
+    margin-right: 14%;
     position: fixed;
     right: 0;
     top: 0;
@@ -137,4 +139,63 @@
 
 #dropDown li:nth-child(3) {
     margin-bottom: 10px;
+}
+
+.barsContainer {
+    display: none;
+    cursor: pointer;
+    z-index: 1000;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+    width: 33px;
+    height: 4px;
+    background-color: rgb(255, 0, 255, 0.5);
+    margin: 5px 0;
+    transition: 0.4s;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -ms-transition: 0.4s;
+    -o-transition: 0.4s;
+}
+
+.barsContainer:hover .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+    -moz-transform: rotate(-45deg) translate(-9px, 6px);
+    -ms-transform: rotate(-45deg) translate(-9px, 6px);
+    -o-transform: rotate(-45deg) translate(-9px, 6px);
+    background-color: rgb(255, 0, 255, 1);
+}
+
+.barsContainer:hover .bar2 {
+    opacity: 0;
+}
+
+.barsContainer:hover .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+    -moz-transform: rotate(45deg) translate(-8px, -8px);
+    -ms-transform: rotate(45deg) translate(-8px, -8px);
+    -o-transform: rotate(45deg) translate(-8px, -8px);
+    background-color: rgb(255, 0, 255, 1);
+}
+
+@media only screen and (max-width: 1300px) {
+    #dropDown {
+        margin-right: 5%;
+    }
+}
+
+@media only screen and (max-width: 1020px) {
+    .barsContainer {
+        display: block;
+    }
+    #options {
+        display: none;
+    }
 }

@@ -2,10 +2,19 @@ import { Fragment, useEffect, useState } from "react";
 import profileStyle from "./Profile.module.css";
 import Header from "../Header/Header.js";
 import services from "../../server/services";
+import PostDetails from "../Pages/PostDetails.js";
+import { useSelector, useDispatch } from "react-redux";
+import { increment } from "../../redux/postState";
 
 function ViewUserProfile(param, { history }) {
 	const [profileInfo, setProfileInfo] = useState({});
 	const [profilePosts, setProfilePosts] = useState({});
+
+	const [getProfileId, setProfileId] = useState({});
+	const [getPostId, setPostId] = useState({});
+
+	const { viewState } = useSelector((state) => state.postState);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		async function setProfile() {
@@ -25,10 +34,23 @@ function ViewUserProfile(param, { history }) {
 			return res;
 		});
 	}
+	function handleViewPost(e) {
+		e.preventDefault();
+
+		let profileId = param.location.pathname.split("/")[2];
+		let postId = e.target.parentNode.getAttribute("data-index");
+
+		setProfileId(profileId);
+		setPostId(postId);
+
+		dispatch(increment("block"));
+	}
 	return (
 		<Fragment>
-			{console.log(profileInfo.username)}
 			<Header />
+			<div style={{ display: viewState }}>
+				<PostDetails profileId={getProfileId} postId={getPostId} />
+			</div>
 			<div id={profileStyle.profileContainer}>
 				<div id={profileStyle.profileInfoContainer}>
 					<div className={profileStyle.profileImage}>
@@ -53,6 +75,8 @@ function ViewUserProfile(param, { history }) {
 					{profilePosts ? (
 						Object.entries(profilePosts).map((el) => (
 							<div
+								data-index={el[0]}
+								onClick={(e) => handleViewPost(e)}
 								key={el[0]}
 								className={profileStyle.postContainer}>
 								<img src={el[1].imageUrl} alt="" />

@@ -57,3 +57,7 @@ a :active {
     text-decoration: none;
     color: none;
 }
+
+a:active {
+    color: grey !important;
+}

@@ -38,3 +38,9 @@
 .friendList span:hover {
     background-color: #d7d8da;
 }
+
+@media only screen and (max-width: 1080px) {
+    #menuContainer {
+        display: none;
+    }
+}
