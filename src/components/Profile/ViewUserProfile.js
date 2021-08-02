@@ -55,7 +55,7 @@ function ViewUserProfile(param, { history }) {
 				<div id={profileStyle.profileInfoContainer}>
 					<div className={profileStyle.profileImage}>
 						<img
-							src="https://lh3.googleusercontent.com/j47al-nxXbjW2ZiRuhT7VDFOgZntl2r_QwDMB116TJ_qos7B8zJiUo1VhoSzNwAvr7LF9p0=s85"
+							src="https://library.mu-varna.bg/wp-content/uploads/2017/04/default-user-img.jpg"
 							alt=""
 						/>
 					</div>

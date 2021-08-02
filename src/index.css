@@ -22,16 +22,16 @@ a :active {
 .defaultButton {
     border: 1px solid #dc00dc;
     color: #dc00dc;
-    font-size: 1.2rem;
+    font-size: 1rem;
     background-color: #fff;
     cursor: pointer;
-    padding: 6px 20px;
+    padding: 6px 16px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
-    margin-bottom: 15px;
+    margin: 10px;
     transition: 0.3s linear;
     -webkit-transition: 0.3s linear;
     -moz-transition: 0.3s linear;

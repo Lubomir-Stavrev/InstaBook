@@ -2,6 +2,7 @@ import headerStyle from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import services from "../../server/services";
+import logo from "../../images/instabookLogo.png";
 
 export default () => {
 	const [dropDownCondition, setDropDownCondition] = useState("none");
@@ -26,13 +27,32 @@ export default () => {
 						<span>book</span>
 					</Link>
 				</div>
-				<div id={headerStyle.searchContainer}>
-					<input
-						className={headerStyle.search}
-						type="text"
-						placeholder="Search"
-					/>
+				<div id={headerStyle.titleLogo}>
+					<Link to="/home">
+						<span>
+							<img src={logo} alt="" />
+						</span>
+					</Link>
 				</div>
+				{window.location.pathname.includes("home") ? (
+					<div id={headerStyle.searchContainer}>
+						<input
+							className={headerStyle.search}
+							type="text"
+							placeholder="Search"
+						/>
+					</div>
+				) : (
+					<div
+						style={{ display: "none" }}
+						id={headerStyle.searchContainer}>
+						<input
+							className={headerStyle.search}
+							type="text"
+							placeholder="Search"
+						/>
+					</div>
+				)}
 				<div id={headerStyle.options}>
 					<Link to="/home">
 						<span>Home</span>

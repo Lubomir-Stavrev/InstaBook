@@ -3,21 +3,24 @@
     margin: 0 auto;
     justify-content: center;
     position: relative;
-    margin-top: 90px;
+    margin-top: 85px;
     margin-bottom: 100px;
 }
 
 #addPostContainer {
     position: fixed;
-    bottom: 40px;
+    bottom: 30px;
     text-align: center;
     justify-content: center;
     left: 50%;
     transform: translateX(-50%);
+    width: 50%;
 }
 
 #addPostContainer button {
-    padding: 0px 7rem;
+    padding: 0px 5rem;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
     font-size: 2.6rem;
     background-color: rgba(255, 255, 255, 0.3);
     border: 1px solid grey;
@@ -38,22 +41,22 @@
     display: flex;
     margin: 0 auto;
     justify-content: center;
-    margin-right: 100px;
 }
 
 .profileImage {
-    margin-right: 5rem;
+    margin-right: 3rem;
 }
 
 .profileImage img {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
     object-fit: cover;
     border-radius: 50%;
 }
 
 .profileInfo {
     text-align: left;
+    margin-top: -25px;
 }
 
 .profileInfo span {
@@ -62,27 +65,24 @@
 
 #postsContainer {
     text-align: center;
-    margin: 2rem 10%;
+    margin: 0 auto;
     display: flex;
     position: relative;
     flex-wrap: wrap;
+    margin-top: 20px;
 }
 
 .postContainer {
-    margin: 10px;
+    margin: 0.1px;
     flex-grow: 1;
 }
 
 .postContainer img {
-    width: 300px;
-    height: 250px;
+    width: calc(500px - 6rem);
+    height: calc(450px - 7rem);
     object-fit: cover;
     cursor: pointer;
     transition: 0.3s linear;
-    -webkit-transition: 0.3s linear;
-    -moz-transition: 0.3s linear;
-    -ms-transition: 0.3s linear;
-    -o-transition: 0.3s linear;
 }
 
 .postContainer img:hover {
@@ -91,17 +91,16 @@
 
 #addPost {
     border: #202020 solid 1px;
-    width: 70vw;
-    height: 33vw;
-    margin-bottom: 30px;
+    margin-bottom: 80px;
     background-color: rgba(255, 255, 255, 0.9);
+    width: 100%;
 }
 
 #addPost form label {
     text-align: center;
     display: block;
-    font-size: calc(22pt - 9pt);
-    margin-top: calc(2rem - 10px);
+    font-size: calc(22pt - 4pt);
+    margin-top: calc(2rem - 1px);
 }
 
 #addPost form input {
@@ -120,4 +119,24 @@
     border-bottom: 1.5px solid #EE82EE;
     color: #dc00dc;
     background: none;
+}
+
+@media only screen and (max-width: 600px) {
+    #addPostContainer {
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 831px) {
+    .postContainer img {
+        width: calc(300px - 6rem);
+        height: calc(250px - 6rem);
+    }
+}
+
+@media only screen and (max-width: 625px) {
+    .postContainer img {
+        width: calc(250px - 8.4rem);
+        height: calc(200px - 6.5rem);
+    }
 }
