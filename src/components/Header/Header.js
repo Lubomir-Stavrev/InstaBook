@@ -65,7 +65,7 @@ export default () => {
 				</div>
 				<div
 					className={headerStyle.barsContainer}
-					onMouseOver={(e) => console.log(e)}>
+					onClick={(e) => showDropDown(e)}>
 					<div className={headerStyle.bar1}></div>
 					<div className={headerStyle.bar2}></div>
 					<div className={headerStyle.bar3}></div>

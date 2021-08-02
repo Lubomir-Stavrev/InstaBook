@@ -116,7 +116,6 @@
 }
 
 #dropDown {
-    float: right;
     position: relative;
     border-radius: 10px;
     box-shadow: 0 0px 13px 0 rgb(220, 0, 220, 0.6), 0 1px 1px 0 rgb(220, 0, 220, 0.5);
@@ -124,10 +123,10 @@
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-    margin-right: 14%;
     position: fixed;
     right: 0;
     top: 0;
+    margin-right: 8%;
     z-index: 1000 !important;
     background-color: #fff;
     margin-top: 65px;
@@ -210,6 +209,9 @@
 @media only screen and (max-width: 1020px) {
     .barsContainer {
         display: block;
+    }
+    #dropDown {
+        margin-right: 0%;
     }
     #options {
         display: none;
