@@ -3,6 +3,7 @@ import authStyle from "./Auth.module.css";
 import { Link } from "react-router-dom";
 import service from "../../server/services";
 import isStrongPassword from "validator/lib/isStrongPassword";
+import arrow from "../../images/goBackArrow.png";
 
 function Login({ history }) {
 	const [errorMessage, setErrorMessage] = useState("");
@@ -22,10 +23,10 @@ function Login({ history }) {
 		});
 	}
 	return (
-		<div className={authStyle.formContainer}>
+		<div className={authStyle.formContainerLogin}>
 			<div className={authStyle.goHomeButton}>
 				<Link to="/">
-					<i>🡠</i>
+					<img src={arrow} alt="" />
 				</Link>
 				<span className={authStyle.tooltiptext}>Go Home</span>
 			</div>

@@ -28,11 +28,12 @@
 
 #titleContainer {
     z-index: 1;
-    margin-top: 16vw;
-    font-size: 5rem;
+    width: 100%;
+    font-size: calc(10rem - 80px);
     color: #fff;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     cursor: default;
+    margin-top: calc(10% + 4rem);
 }
 
 .highlightOne {
@@ -79,4 +80,10 @@
     -moz-border-radius: 15px;
     -ms-border-radius: 15px;
     -o-border-radius: 15px;
+}
+
+@media only screen and (max-width: 380px) {
+    #titleContainer {
+        font-size: calc(9rem - 76px) !important;
+    }
 }
