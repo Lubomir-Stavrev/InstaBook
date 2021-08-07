@@ -47,52 +47,73 @@
 
 .detailsContainer .postDetailsFeed {
     background-color: #ffff;
-    display: flex;
-    border-bottom: 1px solid #000;
-    display: block;
+    display: inline !important;
 }
 
-.postDetailsFeed div {
+.postDetailsFeed {
     text-align: left;
     padding-left: 12px;
-    font-size: 1.6rem;
-    border-bottom: 1px solid #000;
     width: calc(250px - 1em);
     margin-right: 30px;
 }
 
+.postDetailsFeed div {
+    display: inline;
+    padding-right: 15px;
+    padding-bottom: 10px;
+}
+
+.postDetailsFeed div:first-child {
+    font-size: 1.7rem !important;
+}
+
+.postDetailsFeed div:last-child {
+    display: block !important;
+}
+
+.postDetailsFeed div i:hover svg {
+    fill: purple;
+}
+
 .postDetailsFeed div i {
-    display: inline !important;
+    color: grey;
 }
 
 .postDetailsFeed div i:hover {
     color: purple;
-}
-
-.commentsDetailsContainer {
-    text-align: left;
-    margin-top: 6px;
-    margin-left: 2em;
+    cursor: pointer;
 }
 
 .commentsDetailsContainer input {
     outline: none;
     border: none;
     width: 80%;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     bottom: 0;
-    padding-top: 12px;
+    padding-top: 1px;
+    padding-bottom: 10px;
 }
 
 .commentDetailsSection {
-    max-height: 355px;
-    height: 355px;
+    max-height: 325px;
+    height: 325px;
     overflow-y: scroll;
     margin-bottom: 15px;
+    text-align: left;
 }
 
 .commentDetailsSection span {
     display: block;
+    padding: 1px 10px 3px;
+}
+
+.commentsDetailsContainer #postCommentButton {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: purple;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
 }
 
 @media only screen and (max-width: 895px) {

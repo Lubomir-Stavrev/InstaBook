@@ -48,9 +48,13 @@ function ViewUserProfile(param, { history }) {
 	return (
 		<Fragment>
 			<Header />
-			<div style={{ display: viewState }}>
-				<PostDetails profileId={getProfileId} postId={getPostId} />
-			</div>
+			{viewState == "block" ? (
+				<div style={{ display: viewState }}>
+					<PostDetails profileId={getProfileId} postId={getPostId} />
+				</div>
+			) : (
+				""
+			)}
 			<div id={profileStyle.profileContainer}>
 				<div id={profileStyle.profileInfoContainer}>
 					<div className={profileStyle.profileImage}>

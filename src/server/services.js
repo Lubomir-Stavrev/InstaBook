@@ -61,7 +61,7 @@ export default {
     signOut() { localStorage.removeItem('auth'); },
     makePost(title, description, imageUrl) {
 
-        return fetch(db + '.json', {
+        return fetch(db + 'allPosts/.json', {
                 method: 'POST',
                 body: JSON.stringify({
                     title,
@@ -70,13 +70,15 @@ export default {
                     uid: JSON.parse(localStorage.getItem('auth')).uid,
                     username: this.getCurrentUserData().username
                 })
-            }).then(data => {
+            }).then(res => res.json())
+            .then(data => {
                 return fetch(db + `users/${this.getCurrentUserData().userDbKey}/posts/.json`, {
                     method: "POST",
                     body: JSON.stringify({
                         title,
                         description,
                         imageUrl,
+                        postId: data.name,
                         uid: JSON.parse(localStorage.getItem('auth')).uid,
                         username: this.getCurrentUserData().username
                     })
@@ -87,7 +89,7 @@ export default {
     async getAllPosts() {
 
         let allPosts = [];
-        await fetch(db + '.json')
+        await fetch(db + 'allPosts/.json')
             .then(res => res.json())
             .then(data => {
                 Object.entries(data).forEach(el => {
@@ -124,12 +126,13 @@ export default {
         return data;
     },
     updateLike(postId, uid) {
-
-        return fetch(db + `${postId}/.json`)
+        console.log(postId)
+        return fetch(db + `allPosts/${postId}/.json`)
             .then(res => res.json())
             .then(data => {
                 let likedUsers = [];
                 let isLiked = false;
+                console.log(data);
                 if (data.likedUsers) {
                     likedUsers = data.likedUsers;
                     likedUsers.forEach(likedUserId => {
@@ -146,13 +149,42 @@ export default {
 
                 }
 
-                fetch(db + `${postId}/.json`, {
+                fetch(db + `allPosts/${postId}/.json`, {
+                    method: 'PATCH',
+                    body: JSON.stringify({
+                        likedUsers,
+                    })
+                }).then(res => {
+                    this.updateLikesInProfile(postId, uid, likedUsers)
+                })
+                return { isAlreadyLiked: isLiked };
+            });
+    },
+    updateLikesInProfile(postId, uid, likedUsers) {
+        let userDataBaseId = '';
+        let postDataBaseId = '';
+
+        return fetch(db + `users/.json`)
+            .then(res => res.json())
+            .then(data => {
+                Object.entries(data).forEach(user => {
+                    if (user[1].posts) {
+                        Object.entries(user[1].posts).forEach(postInfo => {
+                            if (postInfo[1].postId === postId) {
+                                userDataBaseId = user[0];
+                                postDataBaseId = postInfo[0];
+
+                            }
+                        })
+                    }
+                })
+            }).then(res => {
+                fetch(db + `users/${userDataBaseId}/posts/${postDataBaseId}.json`, {
                     method: 'PATCH',
                     body: JSON.stringify({
                         likedUsers,
                     })
                 })
-                return { isAlreadyLiked: isLiked };
             });
     },
     getProfile(id) {
@@ -162,6 +194,7 @@ export default {
                 let userToReturn;
                 Object.values(allUsers)
                     .forEach(user => {
+
                         if (user.uid === id) {
                             userToReturn = user;
                         }
@@ -173,28 +206,63 @@ export default {
         return fetch(db + `users/${this.getCurrentUserData().userDbKey}/posts/.json`)
             .then(res => res.json())
             .then(data => {
+                console.log(data);
                 return data;
             })
     },
     sendComment(idPost, comment) {
 
-        return fetch(db + `${idPost}/commentSection.json`, {
-            method: 'POST',
-            body: JSON.stringify({
+        return fetch(db + `allPosts/${idPost}/commentSection.json`, {
+                method: 'POST',
+                body: JSON.stringify({
 
-                comment,
-                profileEmail: this.getCurrentUserData().email,
-                profileName: this.getCurrentUserData().username,
-                profileDbKey: this.getCurrentUserData().userDbKey,
+                    comment,
+                    profileEmail: this.getCurrentUserData().email,
+                    profileName: this.getCurrentUserData().username,
+                    profileDbKey: this.getCurrentUserData().userDbKey,
 
 
+                })
+            }).then(res => res.json())
+            .then(dataRes => {
+                let userDataBaseId = '';
+                let postDataBaseId = '';
+
+                return fetch(db + `users/.json`)
+                    .then(res => res.json())
+                    .then(data => {
+                        Object.entries(data).forEach(user => {
+                            if (user[1].posts) {
+                                Object.entries(user[1].posts).forEach(postInfo => {
+
+                                    if (postInfo[1].postId === idPost) {
+                                        userDataBaseId = user[0];
+                                        postDataBaseId = postInfo[0];
+
+                                    }
+                                })
+                            }
+                        })
+                    }).then(res => {
+                        fetch(db + `users/${userDataBaseId}/posts/${postDataBaseId}/comments/.json`, {
+                            method: 'POST',
+                            body: JSON.stringify({
+
+                                comment,
+                                profileEmail: this.getCurrentUserData().email,
+                                profileName: this.getCurrentUserData().username,
+                                profileDbKey: this.getCurrentUserData().userDbKey,
+
+
+                            })
+                        })
+                    });
             })
-        }).then(res => res.json())
 
     },
     async getAllComments(idPost) {
         let comments = [];
-        await fetch(db + `${idPost}/commentSection.json`)
+        await fetch(db + `allPosts/${idPost}/commentSection.json`)
             .then(res => res.json())
             .then(data => {
                 if (data) {
@@ -213,7 +281,7 @@ export default {
     },
     getPostFromUser(userId, postId) {
 
-        console.log(postId);
+
         return fetch(db + `users/.json`)
             .then(res => res.json())
             .then(users => {
@@ -221,6 +289,14 @@ export default {
                 Object.entries(users).forEach(user => {
                     if (user[1].uid == userId) {
                         Object.entries(user[1].posts).forEach(post => {
+                            if (post[1].likedUsers) {
+                                post[1].likedUsers.forEach(likedUserEl => {
+                                    if (likedUserEl === this.getCurrentUserData().uid) {
+                                        post[1].isLiked = true;
+                                    }
+                                })
+
+                            }
                             if (post[0] == postId) {
                                 postInfo = post
                             }

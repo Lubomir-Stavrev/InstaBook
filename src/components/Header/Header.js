@@ -44,7 +44,7 @@ export default () => {
 					</div>
 				) : (
 					<div
-						style={{ display: "none" }}
+						style={{ visibility: "hidden" }}
 						id={headerStyle.searchContainer}>
 						<input
 							className={headerStyle.search}
@@ -80,6 +80,9 @@ export default () => {
 				</Link>
 				<Link to="/friends">
 					<li>Friends</li>
+				</Link>
+				<Link style={{ display: "none" }} to="/messages">
+					<li>Messages</li>
 				</Link>
 				<hr />
 				<Link onClick={(e) => services.signOut()} to="/">

@@ -5,7 +5,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 export const postStateSlice = createSlice({
     name: 'postState',
     initialState: {
-        viewState: "none"
+        viewState: "hidden"
 
     },
     reducers: {
