@@ -255,14 +255,12 @@ export default () => {
 											placeholder="Add a comment..."
 										/>
 										<i
+											className={
+												mainContantStyle.postButton
+											}
 											onClick={(e) =>
 												handlePostComment(e)
-											}
-											style={{
-												fontSize: "1.5rem",
-												cursor: "pointer",
-												color: "purple"
-											}}>
+											}>
 											Post
 										</i>
 									</div>
@@ -270,7 +268,7 @@ export default () => {
 							);
 						})
 					) : (
-						<div /* className={profile.emptyPageContainer} */>
+						<div>
 							<h1>No Rotines Yet!</h1>
 						</div>
 					)}

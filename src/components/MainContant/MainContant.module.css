@@ -70,7 +70,7 @@
     .commentsContainer input {
         outline: none;
         border: none;
-        width: 87%;
+        width: 77%;
         font-size: 1.5rem;
         padding-left: 10px;
     }
@@ -81,6 +81,15 @@
         overflow-y: scroll;
         margin-bottom: 15px;
         margin-left: 19px;
+    }
+    
+    .postButton {
+        font-size: 2rem;
+        cursor: pointer;
+        color: purple;
+        position: fixed;
+        right: 10px;
+        bottom: 0;
     }
     
     .commentSection span {
