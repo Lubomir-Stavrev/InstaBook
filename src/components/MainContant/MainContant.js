@@ -2,6 +2,7 @@ import mainContantStyle from "./MainContant.module.css";
 import { Fragment, useEffect, useState } from "react";
 import { Link, Switch, Route } from "react-router-dom";
 import services from "../../server/services";
+import PostStorie from "../Stories/Stories.js";
 
 export default () => {
 	const [allPosts, setAllPosts] = useState([]);
@@ -87,17 +88,11 @@ export default () => {
 	return (
 		<Fragment>
 			<div id={mainContantStyle.mainContainer}>
+				<PostStorie></PostStorie>
 				<div id={mainContantStyle.stories}>
-					<div
-						style={{
-							width: "65px",
-							height: "65px",
-							border: "none"
-						}}>
-						<img
-							src="https://icon-library.com/images/icon-plus-sign/icon-plus-sign-25.jpg"
-							alt=""
-						/>
+					<div className={mainContantStyle.addStorieButton}>
+						<div className={mainContantStyle.horizontalLine}></div>
+						<div className={mainContantStyle.verticleLine}></div>
 					</div>
 					<div>
 						<img
@@ -174,7 +169,7 @@ export default () => {
 											</i>
 										</div>
 									</div>
-									<div style={{ marginLeft: "20px" }}>
+									<div style={{ marginLeft: "14px" }}>
 										<span>
 											{el[1].likedUsers
 												? el[1].likedUsers.length
