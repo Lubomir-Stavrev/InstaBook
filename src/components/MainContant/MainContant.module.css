@@ -221,13 +221,11 @@
             -moz-transform: translateX(0%);
             -ms-transform: translateX(0%);
             -o-transform: translateX(0%);
-            position: fixed;
-            z-index: 100;
-            top: 60px;
+            top: 0px;
         }
         #mainContainer {
             margin: 0 auto;
-            margin-top: 14rem;
+            margin-top: 5rem;
         }
         #mainContainer .postContainer {
             transform: translateX(0%);

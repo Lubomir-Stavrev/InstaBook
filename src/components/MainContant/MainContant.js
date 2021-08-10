@@ -3,9 +3,13 @@ import { Fragment, useEffect, useState } from "react";
 import { Link, Switch, Route } from "react-router-dom";
 import services from "../../server/services";
 import PostStorie from "../Stories/Stories.js";
+import { useSelector, useDispatch } from "react-redux";
+import { increment } from "../../redux/storieState";
 
 export default () => {
 	const [allPosts, setAllPosts] = useState([]);
+	const dispatch = useDispatch();
+	const { viewState } = useSelector((state) => state.storieState);
 
 	useEffect(() => {
 		async function setPosts() {
@@ -85,12 +89,26 @@ export default () => {
 			e.target.parentNode.parentNode.parentNode.parentNode.lastChild;
 		commentWrapper.children[2].focus();
 	}
+
+	function handleMakeStorie(e) {
+		e.preventDefault();
+
+		dispatch(increment("block"));
+	}
 	return (
 		<Fragment>
 			<div id={mainContantStyle.mainContainer}>
-				<PostStorie></PostStorie>
+				{viewState == "block" ? (
+					<div style={{ display: viewState }}>
+						<PostStorie></PostStorie>
+					</div>
+				) : (
+					""
+				)}
 				<div id={mainContantStyle.stories}>
-					<div className={mainContantStyle.addStorieButton}>
+					<div
+						onClick={(e) => handleMakeStorie(e)}
+						className={mainContantStyle.addStorieButton}>
 						<div className={mainContantStyle.horizontalLine}></div>
 						<div className={mainContantStyle.verticleLine}></div>
 					</div>

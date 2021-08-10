@@ -15,7 +15,7 @@
     transform: translateX(-50%);
     margin: 0 auto;
     box-shadow: 0 1px 30px 0 rgba(255, 0, 255, 0.6), 0 0px 5px 0 rgba(255, 0, 255, 0.6);
-    top: 45px;
+    top: 40px;
     position: fixed;
     background-color: #fff;
     display: flex;
@@ -23,4 +23,158 @@
     -moz-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     -o-transform: translateX(-50%);
+}
+
+#storieContainer .imgContainer {
+    display: block;
+    padding: 10px;
+    padding-top: 20px;
+}
+
+#storieContainer .imgContainer img {
+    max-width: 400px;
+    width: 400px;
+    max-height: 500px;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+    border: 3px dotted #52006a;
+    padding: 2px;
+}
+
+.customFileUpload input[type="file"] {
+    display: none;
+}
+
+.customFileUpload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    cursor: pointer;
+    padding: 20px 20px;
+}
+
+.customFileUpload div {
+    text-align: center;
+    font-size: 2rem;
+    border: 4px dotted #52006a;
+    padding: 210px 80px;
+}
+
+#storieImageCounter {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    display: flex;
+    z-index: 1000;
+    width: 413px;
+    text-align: center;
+}
+
+#storieImageCounter div {
+    border: 1px solid #52006a;
+    padding: 5px 9px;
+    border-radius: 5px;
+    margin-top: 6px;
+    margin-left: 6px;
+    cursor: pointer;
+}
+
+#storieImageCounter div:first-child {
+    background-color: #52006a;
+}
+
+#previousArrow {
+    position: fixed;
+    z-index: 1000;
+    left: 25%;
+    top: 25%;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+}
+
+#nextArrow {
+    position: fixed;
+    z-index: 1000;
+    right: 25%;
+    top: 25%;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+
+#previousArrow img,
+#nextArrow img {
+    width: 100px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 965px) {
+    .customFileUpload div {
+        text-align: center;
+        font-size: 2rem;
+        border: 3px dotted #52006a;
+        padding: 200px 100px;
+    }
+    .customFileUpload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        cursor: pointer;
+        padding: 20px 20px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    #storieContainer .imgContainer img {
+        max-width: 350px;
+        width: 350px;
+        max-height: 450px;
+        height: 450px;
+        object-fit: cover;
+        display: block;
+        border: 3px dotted #52006a;
+        padding: 2px;
+    }
+    #storieImageCounter {
+        left: 55%;
+    }
+}
+
+@media only screen and (max-width: 1240px) {
+    #previousArrow {
+        left: 15%;
+    }
+    #nextArrow {
+        right: 15%;
+    }
+}
+
+@media only screen and (max-width: 860px) {
+    #previousArrow {
+        left: 2%;
+        top: 82%
+    }
+    #nextArrow {
+        right: 2%;
+        top: 82.5%
+    }
+    #nextArrow img,
+    #previousArrow img {
+        width: 50px;
+        filter: brightness(0%);
+        -webkit-filter: brightness(0%);
+    }
 }
