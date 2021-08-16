@@ -28,7 +28,7 @@
 #storieContainer .imgContainer {
     display: block;
     padding: 10px;
-    padding-top: 20px;
+    padding-top: 35px;
 }
 
 #storieContainer .imgContainer img {
@@ -78,7 +78,7 @@
     border: 1px solid #52006a;
     padding: 5px 9px;
     border-radius: 5px;
-    margin-top: 6px;
+    margin-top: 20px;
     margin-left: 6px;
     cursor: pointer;
 }

@@ -121,6 +121,54 @@
     background: none;
 }
 
+.addImageButtonContainer {
+    border-radius: 200px;
+    -webkit-border-radius: 200px;
+    -moz-border-radius: 200px;
+    -ms-border-radius: 200px;
+    -o-border-radius: 200px;
+}
+
+.addImageButtonContainer span {
+    position: absolute;
+    font-size: 10rem;
+    margin-left: 25px;
+    margin-top: -23px;
+    cursor: pointer;
+    display: none;
+}
+
+.addImageButtonContainer:hover {
+    opacity: 0.5;
+}
+
+.addImageButtonContainer:hover span {
+    display: block;
+}
+
+#addImageContainer {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 40px;
+    padding-bottom: 10px;
+    border: 1px solid #202020;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    width: 20%;
+    z-index: 1000;
+}
+
+#addImageContainer label {
+    display: block;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
 @media only screen and (max-width: 600px) {
     #addPostContainer {
         width: auto;

@@ -5,26 +5,22 @@ import storieStyle from "./Stories.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { increment } from "../../redux/storieState";
 import arrow from "../../images/next.png";
-import storage from "../../server/firebaseConfig.js";
 
-export default () => {
-	const [getImg, setImg] = useState({ file: null });
-	const [getImageFiles, setImageFiles] = useState({ file: null });
+export default ({ param }) => {
+	const [getStories, setStories] = useState();
 	const dispatch = useDispatch();
-	const [currImgIndex, setCurrImgIndex] = useState(0);
+	const [currStorieIndex, setCurrStorieIndex] = useState(0);
+	const [storieImgIndex, setStorieImgIndex] = useState(0);
 
-	function readFile(event) {
-		let urlArray = [];
-		let fileArray = [];
-		for (let i = 0; i < event.target.files.length; i++) {
-			urlArray.push(URL.createObjectURL(event.target.files[i]));
-			fileArray.push(event.target.files[i]);
+	useEffect(() => {
+		async function getAllStories() {
+			let allStories = await services.getStories();
+			setStories(await allStories);
+			setCurrStorieIndex(Number(param));
 		}
-		setImg({
-			file: urlArray
-		});
-		setImageFiles(fileArray);
-	}
+		getAllStories();
+	}, []);
+
 	function hidePostDetails(e) {
 		e.preventDefault();
 
@@ -36,68 +32,60 @@ export default () => {
 			el.style.backgroundColor = "white";
 		});
 		e.target.style.backgroundColor = "#52006a";
-		setCurrImgIndex(index - 1);
+		setCurrStorieIndex(index - 1);
 	}
 	function nextImg(e) {
-		setCurrImgIndex((prev) => {
-			return prev + 1;
-		});
+		let currentUserStoriesLength = Object.values(
+			getStories[currStorieIndex]?.posts
+		).length;
+		if (storieImgIndex < currentUserStoriesLength - 1) {
+			setStorieImgIndex((prev) => {
+				return Number(prev) + 1;
+			});
+		} else {
+			setCurrStorieIndex((prev) => {
+				setStorieImgIndex(0);
+				return Number(prev) + 1;
+			});
+		}
 		let storiesContainer = e.target.parentNode.parentNode.children[3];
 		let storieIndexes = storiesContainer.children[0].children;
 		[...storieIndexes].forEach((el) => {
 			let index = el.getAttribute("data-index");
-			if (index == currImgIndex + 2) {
-				el.style.backgroundColor = "#52006a";
-			} else {
-				el.style.backgroundColor = "white";
-			}
+
+			setStorieImgIndex((prev) => {
+				if (index == prev + 1) {
+					el.style.backgroundColor = "#52006a";
+				} else {
+					el.style.backgroundColor = "white";
+				}
+
+				return prev;
+			});
 		});
 	}
 	function previouseImg(e) {
-		setCurrImgIndex((prev) => {
-			return prev - 1;
-		});
+		if (storieImgIndex > 0) {
+			setStorieImgIndex((prev) => {
+				return Number(prev) - 1;
+			});
+		} else {
+			setCurrStorieIndex((prev) => {
+				setStorieImgIndex(0);
+				return Number(prev) - 1;
+			});
+		}
+
 		let storiesContainer = e.target.parentNode.parentNode.children[3];
 		let storieIndexes = storiesContainer.children[0].children;
 		[...storieIndexes].forEach((el) => {
 			let index = el.getAttribute("data-index");
-			if (index == currImgIndex) {
+			if (index == storieImgIndex) {
 				el.style.backgroundColor = "#52006a";
 			} else {
 				el.style.backgroundColor = "white";
 			}
 		});
-	}
-
-	async function postStories(e) {
-		e.preventDefault();
-
-		let storieArray = [];
-		let currentUserId = services.getCurrentUserData().userDbKey;
-		for (let i = 0; i < getImageFiles.length; i++) {
-			const uploadTask = storage.storage
-				.ref(`images/${currentUserId}/${getImageFiles[i].name}`)
-				.put(getImageFiles[i]);
-
-			uploadTask.on(
-				"state_changed",
-				(snapshot) => {},
-				(error) => {
-					console.log(error);
-				},
-				() => {
-					storage.storage
-						.ref(`images/${currentUserId}`)
-						.child(getImageFiles[i].name)
-						.getDownloadURL()
-						.then((url) => {
-							let urlAsString = url.toString();
-
-							services.postStorie(urlAsString);
-						});
-				}
-			);
-		}
 	}
 
 	return (
@@ -124,7 +112,7 @@ export default () => {
 							fillRule="evenodd"></path>
 					</svg>
 				</div>
-				{getImg?.file?.length > 1 ? (
+				{getStories?.length > 1 ? (
 					<Fragment>
 						<div
 							onClick={(e) => previouseImg(e)}
@@ -143,8 +131,10 @@ export default () => {
 
 				<div id={storieStyle.storieContainer}>
 					<div id={storieStyle.storieImageCounter}>
-						{getImg?.file
-							? getImg?.file.map((e, i) => {
+						{getStories
+							? Object.entries(
+									getStories[currStorieIndex]?.posts
+							  ).map((e, i) => {
 									i++;
 									return (
 										<div
@@ -156,38 +146,36 @@ export default () => {
 							  })
 							: ""}
 					</div>
-
-					{getImg?.file ? (
+					{getStories ? (
 						<div className={storieStyle.imgContainer}>
-							<img src={getImg?.file[currImgIndex]} />
-							<button
-								className="defaultButton"
-								onClick={(e) => setImg({ file: null })}
-								type="submit">
-								Back
-							</button>
-							<button
-								className="defaultButton"
-								onClick={(e) => postStories(e)}
-								type="submit">
-								Post
-							</button>
+							{Object.values(getStories[currStorieIndex]?.posts)
+								.length > 0
+								? Object.values(
+										getStories[currStorieIndex]?.posts
+								  ).map((el, i) => {
+										if (el.postURL && i == storieImgIndex) {
+											return (
+												<>
+													<span
+														style={{
+															position: "fixed",
+															left: "15px",
+															top: "0px"
+														}}>
+														{el?.username}
+													</span>
+													<img
+														src={el.postURL}
+														alt=""
+													/>
+												</>
+											);
+										}
+								  })
+								: null}
 						</div>
 					) : (
-						<form action="">
-							<label className={storieStyle.customFileUpload}>
-								<input
-									onChange={(e) => readFile(e)}
-									accept="image/gif, image/jpeg, image/png"
-									type="file"
-									multiple
-								/>
-								<div>
-									<span>Click To Upload</span>
-								</div>
-							</label>
-							<br />
-						</form>
+						""
 					)}
 				</div>
 			</div>

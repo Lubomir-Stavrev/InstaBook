@@ -3,19 +3,28 @@ import { Fragment, useEffect, useState } from "react";
 import { Link, Switch, Route } from "react-router-dom";
 import services from "../../server/services";
 import PostStorie from "../Stories/Stories.js";
+import ViewStorie from "../Stories/ViewStorie";
 import { useSelector, useDispatch } from "react-redux";
 import { increment } from "../../redux/storieState";
+import storage from "../../server/firebaseConfig.js";
 
 export default () => {
 	const [allPosts, setAllPosts] = useState([]);
 	const dispatch = useDispatch();
 	const { viewState } = useSelector((state) => state.storieState);
+	const [getStories, setStories] = useState();
+	const [currentStorieIndex, setStorieIndex] = useState();
 
 	useEffect(() => {
 		async function setPosts() {
 			let data = await getAllPosts();
+			let stories = await services.getStories();
+
 			if (data) {
-				setAllPosts(data);
+				await setAllPosts(data);
+			}
+			if (stories) {
+				await setStories(stories);
 			}
 		}
 		setPosts();
@@ -95,6 +104,13 @@ export default () => {
 
 		dispatch(increment("block"));
 	}
+
+	function handleViewStorie(e) {
+		e.preventDefault();
+		let storieIndex = e.target.parentNode.getAttribute("data-index");
+		setStorieIndex(storieIndex);
+	}
+
 	return (
 		<Fragment>
 			<div id={mainContantStyle.mainContainer}>
@@ -105,6 +121,11 @@ export default () => {
 				) : (
 					""
 				)}
+				{currentStorieIndex ? (
+					<ViewStorie param={currentStorieIndex}></ViewStorie>
+				) : (
+					""
+				)}
 				<div id={mainContantStyle.stories}>
 					<div
 						onClick={(e) => handleMakeStorie(e)}
@@ -112,13 +133,18 @@ export default () => {
 						<div className={mainContantStyle.horizontalLine}></div>
 						<div className={mainContantStyle.verticleLine}></div>
 					</div>
-					<div>
-						<img
-							src="https://randomwordgenerator.com/img/picture-generator/53e4d2464a56a914f1dc8460962e33791c3ad6e04e507440722d7cd39345c1_640.jpg"
-							alt=""
-						/>
-					</div>
-					<div></div>
+					{getStories
+						? Object.values(getStories).map((storie) => {
+								return (
+									<div
+										data-index={storie.index}
+										key={storie.uid}
+										onClick={(e) => handleViewStorie(e)}>
+										<img src={storie.imageProfile} alt="" />
+									</div>
+								);
+						  })
+						: null}
 				</div>
 				<div id={mainContantStyle.postsContainer}>
 					{Object.keys(allPosts).length !== 0 ? (

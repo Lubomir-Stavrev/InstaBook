@@ -5,12 +5,23 @@ import services from "../../server/services";
 
 function Profile({ history }) {
 	const [profilePosts, setProfilePosts] = useState({});
+	const [getProfileData, setProfileData] = useState({});
+
+	const [getProfileImageContainer, setProfileImageContainer] =
+		useState("none");
 
 	useEffect(() => {
 		async function setProfile() {
 			let data = await services.getCurrentUserPosts();
+			let profileData = await services.getProfile(
+				services.getCurrentUserData().uid
+			);
 			if (data) {
 				setProfilePosts(data);
+			}
+			if (profileData) {
+				console.log(profileData);
+				setProfileData(profileData);
 			}
 		}
 		setProfile();
@@ -43,16 +54,86 @@ function Profile({ history }) {
 			return history.push("/profile");
 		});
 	}
+
+	function showPostProfileImage(e) {
+		e.preventDefault();
+		setProfileImageContainer("block");
+	}
+	function updateProfileImage(e) {
+		e.preventDefault();
+		let input = e.target.parentNode.children[2];
+
+		if (!input.value) {
+			input.style.border = "1px solid red";
+			return;
+		}
+
+		services.updateProfile(input.value).then((res) => {
+			setProfileImageContainer("none");
+			services
+				.getProfile(services.getCurrentUserData().uid)
+				.then((res) => {
+					if (res) {
+						setProfileData(res);
+					}
+				});
+		});
+	}
 	return (
 		<Fragment>
 			<Header />
 			<div id={profileStyle.profileContainer}>
+				<div
+					style={{ display: getProfileImageContainer }}
+					id={profileStyle.addImageContainer}>
+					<div
+						onClick={(e) => setProfileImageContainer("none")}
+						style={{
+							right: "10px",
+							top: "10px",
+							cursor: "pointer",
+							position: "fixed"
+						}}>
+						<svg
+							aria-label="Close"
+							fill="#202020"
+							height="24"
+							role="img"
+							viewBox="0 0 48 48"
+							width="24">
+							<path
+								clipRule="evenodd"
+								d="M41.8 9.8L27.5 24l14.2 14.2c.6.6.6 1.5 0 2.1l-1.4 1.4c-.6.6-1.5.6-2.1 0L24 27.5 9.8 41.8c-.6.6-1.5.6-2.1 0l-1.4-1.4c-.6-.6-.6-1.5 0-2.1L20.5 24 6.2 9.8c-.6-.6-.6-1.5 0-2.1l1.4-1.4c.6-.6 1.5-.6 2.1 0L24 20.5 38.3 6.2c.6-.6 1.5-.6 2.1 0l1.4 1.4c.6.6.6 1.6 0 2.2z"
+								fillRule="evenodd"></path>
+						</svg>
+					</div>
+					<label htmlFor="">Image URL</label>
+					<input type="url" placeholder="https://image.jpg" />
+					<br />
+					<button
+						onClick={(e) => updateProfileImage(e)}
+						className="defaultButton">
+						Add
+					</button>
+				</div>
 				<div id={profileStyle.profileInfoContainer}>
 					<div className={profileStyle.profileImage}>
-						<img
-							src="https://library.mu-varna.bg/wp-content/uploads/2017/04/default-user-img.jpg"
-							alt=""
-						/>
+						<div
+							onClick={(e) => showPostProfileImage(e)}
+							className={profileStyle.addImageButtonContainer}>
+							<span>+</span>
+							{getProfileData?.profileImage ? (
+								<img
+									src={getProfileData?.profileImage}
+									alt=""
+								/>
+							) : (
+								<img
+									src="https://library.mu-varna.bg/wp-content/uploads/2017/04/default-user-img.jpg"
+									alt=""
+								/>
+							)}
+						</div>
 					</div>
 					<div className={profileStyle.profileInfo}>
 						<h2>

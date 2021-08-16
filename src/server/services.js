@@ -1,4 +1,4 @@
-import userModel from './firebaseConfig.js'
+import firebase from './firebaseConfig.js'
 
 const usersURL = 'https://instabook-7b05e-default-rtdb.europe-west1.firebasedatabase.app/users.json';
 const db = 'https://instabook-7b05e-default-rtdb.europe-west1.firebasedatabase.app/';
@@ -8,19 +8,21 @@ export default {
 
     async login(email, password) {
 
-        return await userModel.signInWithEmailAndPassword(email, password)
+        return await firebase.userModel.signInWithEmailAndPassword(email, password)
             .then(async function(data) {
                 fetch(db + '/users/.json')
                     .then(res => res.json())
                     .then(userData => {
                         Object.entries(userData)
                             .forEach(userElement => {
+
                                 if (userElement[1].uid === data.user.uid) {
-                                    console.log(userElement[0])
+
                                     localStorage.setItem('auth', JSON.stringify({
                                         uid: data.user.uid,
                                         email,
                                         username: userElement[1].username,
+                                        profileImage: userElement[1].profileImage ? userElement[1].profileImage : "https://library.mu-varna.bg/wp-content/uploads/2017/04/default-user-img.jpg",
                                         userDbKey: userElement[0]
                                     }));
                                 }
@@ -34,7 +36,7 @@ export default {
     },
     async register(username, email, password) {
 
-        return await userModel.createUserWithEmailAndPassword(email, password)
+        return await firebase.userModel.createUserWithEmailAndPassword(email, password)
             .then(async function(data) {
 
                 await fetch(usersURL, {
@@ -120,6 +122,7 @@ export default {
                 email: JSON.parse(localStorage.getItem('auth')).email,
                 username: JSON.parse(localStorage.getItem('auth')).username,
                 userDbKey: JSON.parse(localStorage.getItem('auth')).userDbKey,
+                profileImage: JSON.parse(localStorage.getItem('auth')).profileImage,
 
             }
         }
@@ -305,5 +308,65 @@ export default {
                 })
                 return postInfo
             })
+    },
+    postStorie(imagesArray) {
+        let userId = this.getCurrentUserData().userDbKey;
+
+
+        return fetch(db + `stories/${this.getCurrentUserData().userDbKey}.json`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    postURL: imagesArray,
+                    username: this.getCurrentUserData().username,
+                    imageProfile: this.getCurrentUserData().profileImage,
+                    userId
+                })
+            }).then(res => res.json())
+            .catch(err => {
+                console.log(err)
+            })
+    },
+    async getStories() {
+        let allStories = [];
+
+        let res = await fetch(db + `stories/.json`)
+        res = await res.json()
+        if (await res) {
+            Object.entries(await res).forEach((storie, i) => {
+                let imageProfile = "";
+                Object.values(storie[1]).forEach(el => {
+                    if (el.imageProfile) {
+                        imageProfile = el.imageProfile;
+                        return;
+                    }
+                })
+                let obj = { posts: storie[1], uid: storie[0], imageProfile, index: i }
+                allStories.push(obj);
+            })
+        }
+        allStories.sort((a, b) => a.index - (b.index))
+        return await allStories;
+
+
+    },
+    updateProfile(imgUrl) {
+        return fetch(db + `users/${this.getCurrentUserData().userDbKey}/.json`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                profileImage: imgUrl
+            })
+        }).then(data => {
+            localStorage.setItem('auth', JSON.stringify({
+                uid: this.getCurrentUserData().uid,
+                email: this.getCurrentUserData().email,
+                username: this.getCurrentUserData().username,
+                profileImage: imgUrl,
+                userDbKey: this.getCurrentUserData().userDbKey
+            }));
+
+        }).catch(err => {
+            console.log(err)
+        })
     }
+
 }
