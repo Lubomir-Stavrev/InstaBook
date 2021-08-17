@@ -159,12 +159,17 @@
         cursor: pointer;
         padding: 20px 20px;
     }
+    #storieContainer .imgContainer img,
+    #storieContainer .imgContainerView img {
+        max-width: 315px;
+        width: 315px;
+    }
 }
 
 @media only screen and (max-width: 450px) {
     #storieContainer .imgContainer img {
-        max-width: 350px;
-        width: 350px;
+        max-width: 340px;
+        width: 340px;
         max-height: 450px;
         height: 450px;
         object-fit: cover;
@@ -173,7 +178,7 @@
         padding: 2px;
     }
     #storieImageCounter {
-        left: 85%;
+        left: 100%;
     }
 }
 
