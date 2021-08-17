@@ -5,13 +5,14 @@ import services from "../../server/services";
 import PostStorie from "../Stories/Stories.js";
 import ViewStorie from "../Stories/ViewStorie";
 import { useSelector, useDispatch } from "react-redux";
-import { increment } from "../../redux/storieState";
+import { increment, incrementViewStorie } from "../../redux/storieState";
 import storage from "../../server/firebaseConfig.js";
 
 export default () => {
 	const [allPosts, setAllPosts] = useState([]);
 	const dispatch = useDispatch();
 	const { viewState } = useSelector((state) => state.storieState);
+	const { viewStorieState } = useSelector((state) => state.storieState);
 	const [getStories, setStories] = useState();
 	const [currentStorieIndex, setStorieIndex] = useState();
 
@@ -109,6 +110,7 @@ export default () => {
 		e.preventDefault();
 		let storieIndex = e.target.parentNode.getAttribute("data-index");
 		setStorieIndex(storieIndex);
+		dispatch(incrementViewStorie("block"));
 	}
 
 	return (
@@ -121,8 +123,14 @@ export default () => {
 				) : (
 					""
 				)}
-				{currentStorieIndex ? (
-					<ViewStorie param={currentStorieIndex}></ViewStorie>
+				{viewStorieState == "block" ? (
+					<div style={{ display: viewStorieState }}>
+						{currentStorieIndex ? (
+							<ViewStorie param={currentStorieIndex}></ViewStorie>
+						) : (
+							""
+						)}
+					</div>
 				) : (
 					""
 				)}

@@ -28,10 +28,17 @@
 #storieContainer .imgContainer {
     display: block;
     padding: 10px;
-    padding-top: 35px;
+    padding-top: 20px;
 }
 
-#storieContainer .imgContainer img {
+#storieContainer .imgContainerView {
+    display: block;
+    padding: 10px;
+    padding-top: 60px;
+}
+
+#storieContainer .imgContainer img,
+#storieContainer .imgContainerView img {
     max-width: 400px;
     width: 400px;
     max-height: 500px;
@@ -62,7 +69,7 @@
 
 #storieImageCounter {
     position: fixed;
-    left: 50%;
+    left: 85%;
     transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
@@ -78,7 +85,7 @@
     border: 1px solid #52006a;
     padding: 5px 9px;
     border-radius: 5px;
-    margin-top: 20px;
+    margin-top: 5px;
     margin-left: 6px;
     cursor: pointer;
 }
@@ -122,6 +129,23 @@
     cursor: pointer;
 }
 
+.storieProfileImage {
+    position: fixed;
+    top: 1.5px;
+}
+
+.storieProfileImage img {
+    border: 1px solid #52006a !important;
+    border-radius: 300px !important;
+    -webkit-border-radius: 300px !important;
+    -moz-border-radius: 300px !important;
+    -ms-border-radius: 300px !important;
+    -o-border-radius: 300px !important;
+    width: 50px !important;
+    height: 50px !important;
+    object-fit: cover;
+}
+
 @media only screen and (max-width: 965px) {
     .customFileUpload div {
         text-align: center;
@@ -149,7 +173,7 @@
         padding: 2px;
     }
     #storieImageCounter {
-        left: 55%;
+        left: 85%;
     }
 }
 

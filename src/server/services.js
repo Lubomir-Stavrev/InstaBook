@@ -195,11 +195,13 @@ export default {
             .then(res => res.json())
             .then(allUsers => {
                 let userToReturn;
-                Object.values(allUsers)
+                Object.entries(allUsers)
                     .forEach(user => {
 
-                        if (user.uid === id) {
-                            userToReturn = user;
+                        if (user[1].uid === id) {
+                            userToReturn = user[1];
+                        } else if (user[0] === id) {
+                            userToReturn = user[1];
                         }
                     })
                 return userToReturn;

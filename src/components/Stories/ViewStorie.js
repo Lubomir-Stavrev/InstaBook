@@ -3,7 +3,7 @@ import { Link, Switch, Route } from "react-router-dom";
 import services from "../../server/services";
 import storieStyle from "./Stories.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { increment } from "../../redux/storieState";
+import { incrementViewStorie } from "../../redux/storieState";
 import arrow from "../../images/next.png";
 
 export default ({ param }) => {
@@ -24,7 +24,7 @@ export default ({ param }) => {
 	function hidePostDetails(e) {
 		e.preventDefault();
 
-		dispatch(increment("none"));
+		dispatch(incrementViewStorie("none"));
 	}
 	function changeImgViewIndex(e) {
 		let index = e.target.getAttribute("data-index");
@@ -38,6 +38,8 @@ export default ({ param }) => {
 		let currentUserStoriesLength = Object.values(
 			getStories[currStorieIndex]?.posts
 		).length;
+		let storiesNum = getStories.length;
+
 		if (storieImgIndex < currentUserStoriesLength - 1) {
 			setStorieImgIndex((prev) => {
 				return Number(prev) + 1;
@@ -45,6 +47,9 @@ export default ({ param }) => {
 		} else {
 			setCurrStorieIndex((prev) => {
 				setStorieImgIndex(0);
+				if (prev + 1 == storiesNum) {
+					return 0;
+				}
 				return Number(prev) + 1;
 			});
 		}
@@ -72,6 +77,9 @@ export default ({ param }) => {
 		} else {
 			setCurrStorieIndex((prev) => {
 				setStorieImgIndex(0);
+				if (Number(prev) == 0) {
+					return prev;
+				}
 				return Number(prev) - 1;
 			});
 		}
@@ -146,8 +154,26 @@ export default ({ param }) => {
 							  })
 							: ""}
 					</div>
+
 					{getStories ? (
-						<div className={storieStyle.imgContainer}>
+						<div className={storieStyle.imgContainerView}>
+							{
+								<Link
+									to={`/profile/${getStories[currStorieIndex].uid}`}>
+									<div
+										className={
+											storieStyle.storieProfileImage
+										}>
+										<img
+											src={
+												getStories[currStorieIndex]
+													.imageProfile
+											}
+											alt=""
+										/>
+									</div>
+								</Link>
+							}
 							{Object.values(getStories[currStorieIndex]?.posts)
 								.length > 0
 								? Object.values(
@@ -159,8 +185,9 @@ export default ({ param }) => {
 													<span
 														style={{
 															position: "fixed",
-															left: "15px",
-															top: "0px"
+															left: "74px",
+															top: "13px",
+															fontSize: "1.3rem"
 														}}>
 														{el?.username}
 													</span>

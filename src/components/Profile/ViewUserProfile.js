@@ -23,7 +23,12 @@ function ViewUserProfile(param, { history }) {
 			let data = await getProfileData(profileId);
 			if (data) {
 				setProfilePosts(data.posts);
-				setProfileInfo({ username: data.username, uid: data.uid });
+				console.log(data);
+				setProfileInfo({
+					username: data.username,
+					uid: data.uid,
+					profileImage: data.profileImage
+				});
 			}
 		}
 		setProfile();
@@ -58,10 +63,14 @@ function ViewUserProfile(param, { history }) {
 			<div id={profileStyle.profileContainer}>
 				<div id={profileStyle.profileInfoContainer}>
 					<div className={profileStyle.profileImage}>
-						<img
-							src="https://library.mu-varna.bg/wp-content/uploads/2017/04/default-user-img.jpg"
-							alt=""
-						/>
+						{profileInfo.profileImage ? (
+							<img src={profileInfo?.profileImage} alt="" />
+						) : (
+							<img
+								src="https://library.mu-varna.bg/wp-content/uploads/2017/04/default-user-img.jpg"
+								alt=""
+							/>
+						)}
 					</div>
 					<div className={profileStyle.profileInfo}>
 						<h2>

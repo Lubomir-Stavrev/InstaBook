@@ -70,6 +70,7 @@
     position: relative;
     flex-wrap: wrap;
     margin-top: 20px;
+    background-color: #f0f0f0;
 }
 
 .postContainer {

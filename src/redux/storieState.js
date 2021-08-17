@@ -5,12 +5,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 export const storieStateSlice = createSlice({
     name: 'storieState',
     initialState: {
-        viewState: "hidden"
+        viewState: "hidden",
+        viewStorieState: "hidden"
 
     },
     reducers: {
         increment: (state, action) => {
             state.viewState = action.payload
+        },
+        incrementViewStorie: (state, action) => {
+            state.viewStorieState = action.payload
         },
         incrementComment: (state) => {
             state.lastCommentIndex += 5
@@ -25,6 +29,6 @@ export const storieStateSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementComment, incrementByAmount } = storieStateSlice.actions
+export const { increment, decrement, incrementComment, incrementByAmount, incrementViewStorie } = storieStateSlice.actions
 
 export default storieStateSlice.reducer
