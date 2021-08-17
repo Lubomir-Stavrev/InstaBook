@@ -17,6 +17,7 @@ export default (props) => {
 				props.profileId,
 				props.postId
 			);
+			console.log(await data);
 			setPost(data[1]);
 		}
 		getPostDetails();

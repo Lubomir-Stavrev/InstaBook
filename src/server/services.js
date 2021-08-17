@@ -292,7 +292,8 @@ export default {
             .then(users => {
                 let postInfo = {};
                 Object.entries(users).forEach(user => {
-                    if (user[1].uid == userId) {
+
+                    if (user[1].uid == userId || user[0] == userId) {
                         Object.entries(user[1].posts).forEach(post => {
                             if (post[1].likedUsers) {
                                 post[1].likedUsers.forEach(likedUserEl => {
