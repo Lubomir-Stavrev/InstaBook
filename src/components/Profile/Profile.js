@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import profileStyle from "./Profile.module.css";
 import Header from "../Header/Header.js";
 import services from "../../server/services";
+import noPosts from "../../images/noPostsYet.png";
 
 function Profile({ history }) {
 	const [profilePosts, setProfilePosts] = useState({});
@@ -20,7 +21,6 @@ function Profile({ history }) {
 				setProfilePosts(data);
 			}
 			if (profileData) {
-				console.log(profileData);
 				setProfileData(profileData);
 			}
 		}
@@ -136,19 +136,29 @@ function Profile({ history }) {
 						</div>
 					</div>
 					<div className={profileStyle.profileInfo}>
-						<h2>
-							{services.getCurrentUserData()
-								? services.getCurrentUserData().username
-								: "No username error"}
-						</h2>
-						<span>14 posts</span>
-						<span>104 followers</span>
-						<span>56 following</span>
+						<div className={profileStyle.profileInfoHeader}>
+							<span style={{ fontSize: "1.9rem" }}>
+								{services.getCurrentUserData()
+									? services.getCurrentUserData().username
+									: "No username error"}
+							</span>
+						</div>
+						<div className={profileStyle.profileInfoFooter}>
+							<span>14 posts</span>
+							<span>104 followers</span>
+							<span>56 following</span>
+						</div>
 						<h4>I have telonym can you beleive that</h4>
 					</div>
 				</div>
+				<div className={profileStyle.profileStats}>
+					<span>14 posts</span>
+					<span>104 followers</span>
+					<span>56 following</span>
+				</div>
+				{console.log(Object.entries(profilePosts).length)}
 				<div id={profileStyle.postsContainer}>
-					{profilePosts ? (
+					{Object.entries(profilePosts).length > 0 ? (
 						Object.entries(profilePosts).map((el) => (
 							<div
 								key={el[0]}
@@ -157,8 +167,8 @@ function Profile({ history }) {
 							</div>
 						))
 					) : (
-						<div>
-							<h1>No POSTS</h1>
+						<div className={profileStyle.noPostsContainer}>
+							<img src={noPosts} alt="" />
 						</div>
 					)}
 				</div>

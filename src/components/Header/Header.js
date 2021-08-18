@@ -34,25 +34,15 @@ export default () => {
 						</span>
 					</Link>
 				</div>
-				{window.location.pathname.includes("home") ? (
-					<div id={headerStyle.searchContainer}>
-						<input
-							className={headerStyle.search}
-							type="text"
-							placeholder="Search"
-						/>
-					</div>
-				) : (
-					<div
-						style={{ visibility: "hidden" }}
-						id={headerStyle.searchContainer}>
-						<input
-							className={headerStyle.search}
-							type="text"
-							placeholder="Search"
-						/>
-					</div>
-				)}
+
+				<div id={headerStyle.searchContainer}>
+					<input
+						className={headerStyle.search}
+						type="text"
+						placeholder="Search"
+					/>
+				</div>
+
 				<div id={headerStyle.options}>
 					<Link to="/home">
 						<span>Home</span>

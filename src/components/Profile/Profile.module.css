@@ -3,8 +3,7 @@
     margin: 0 auto;
     justify-content: center;
     position: relative;
-    margin-top: 85px;
-    margin-bottom: 100px;
+    margin-top: 95px;
 }
 
 #addPostContainer {
@@ -15,6 +14,7 @@
     left: 50%;
     transform: translateX(-50%);
     width: 50%;
+    margin: 0px;
 }
 
 #addPostContainer button {
@@ -44,33 +44,47 @@
 }
 
 .profileImage {
-    margin-right: 3rem;
+    margin-right: 6.5rem;
 }
 
 .profileImage img {
-    width: 140px;
-    height: 140px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 50%;
+    padding: 1px;
+    border: 1px solid #dc00dc;
 }
 
 .profileInfo {
     text-align: left;
-    margin-top: -25px;
+    margin-top: 10px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.profileInfo .profileInfoHeader {
+    display: flex;
+}
+
+.profileInfo .profileInfoHeader span {
+    padding-bottom: 14px;
 }
 
 .profileInfo span {
-    margin-right: 12px;
+    margin-right: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300 !important;
 }
 
 #postsContainer {
     text-align: center;
-    margin: 0 auto;
+    margin: 0;
     display: flex;
     position: relative;
     flex-wrap: wrap;
-    margin-top: 20px;
+    margin-top: 50px;
     background-color: #f0f0f0;
+    padding-bottom: 80px;
 }
 
 .postContainer {
@@ -79,8 +93,8 @@
 }
 
 .postContainer img {
-    width: calc(500px - 6rem);
-    height: calc(450px - 7rem);
+    width: calc(415px - 6rem);
+    height: calc(420px - 7rem);
     object-fit: cover;
     cursor: pointer;
     transition: 0.3s linear;
@@ -170,9 +184,60 @@
     margin-bottom: 10px;
 }
 
+.profileStats {
+    border-top: 1px solid #dc00dc;
+    border-bottom: 1px solid #dc00dc;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    display: none;
+}
+
+.profileStats span {
+    margin-right: 13px;
+    margin-left: 13px;
+}
+
+.noPostsContainer {
+    text-align: center;
+    margin: 0;
+    width: 100%;
+}
+
+.noPostsContainer img {
+    padding-top: 30px;
+    width: auto;
+}
+
 @media only screen and (max-width: 600px) {
     #addPostContainer {
         width: auto;
+    }
+    .profileInfo .profileInfoFooter {
+        display: none;
+    }
+    .profileInfo .profileInfoHeader {
+        display: block;
+    }
+    .profileStats {
+        display: block;
+    }
+    .noPostsContainer img {
+        padding-top: 30px;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 485px) {
+    .profileImage {
+        margin-right: 1rem;
+        margin-left: 5px;
+    }
+    .profileImage img {
+        width: 110px;
+        height: 110px;
+    }
+    .profileInfo .profileInfoHeader div {
+        display: flex;
     }
 }
 

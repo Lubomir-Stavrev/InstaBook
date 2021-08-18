@@ -5,6 +5,7 @@ import services from "../../server/services";
 import PostDetails from "../Pages/PostDetails.js";
 import { useSelector, useDispatch } from "react-redux";
 import { increment } from "../../redux/postState";
+import noPosts from "../../images/noPostsYet.png";
 
 function ViewUserProfile(param, { history }) {
 	const [profileInfo, setProfileInfo] = useState({});
@@ -73,16 +74,33 @@ function ViewUserProfile(param, { history }) {
 						)}
 					</div>
 					<div className={profileStyle.profileInfo}>
-						<h2>
-							{profileInfo.username
-								? profileInfo.username
-								: "No username error"}
-						</h2>
-						<span>14 posts</span>
-						<span>104 followers</span>
-						<span>56 following</span>
+						<div className={profileStyle.profileInfoHeader}>
+							<span style={{ fontSize: "1.9rem" }}>
+								{profileInfo.username
+									? profileInfo.username
+									: "No username error"}
+							</span>
+							<div>
+								<button className="defaultButton">
+									Message
+								</button>
+								<button className="defaultButton">
+									Follow
+								</button>
+							</div>
+						</div>
+						<div className={profileStyle.profileInfoFooter}>
+							<span>14 posts</span>
+							<span>104 followers</span>
+							<span>56 following</span>
+						</div>
 						<h4>I have telonym can you beleive that</h4>
 					</div>
+				</div>
+				<div className={profileStyle.profileStats}>
+					<span>14 posts</span>
+					<span>104 followers</span>
+					<span>56 following</span>
 				</div>
 				<div id={profileStyle.postsContainer}>
 					{profilePosts ? (
@@ -96,8 +114,8 @@ function ViewUserProfile(param, { history }) {
 							</div>
 						))
 					) : (
-						<div>
-							<h1>No POSTS</h1>
+						<div className={profileStyle.noPostsContainer}>
+							<img src={noPosts} alt="" />
 						</div>
 					)}
 				</div>

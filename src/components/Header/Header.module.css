@@ -48,6 +48,7 @@
 #searchContainer {
     margin: 0 auto;
     margin-top: 15px;
+    padding-left: 20px;
     text-align: center;
 }
 
@@ -228,5 +229,12 @@
     }
     #titleLogo {
         display: block;
+    }
+}
+
+@media only screen and (max-width: 620px) {
+    #searchContainer .search {
+        padding: 5px calc(30px - 16px);
+        width: 150px;
     }
 }
