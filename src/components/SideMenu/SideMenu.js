@@ -1,5 +1,6 @@
 import sideMenuStyle from "./SideMenu.module.css";
 import services from "../../server/services";
+import logo from "../../images/instabookPurpleLogo.png";
 
 export default () => {
 	return (
@@ -22,6 +23,9 @@ export default () => {
 				<span>Annalise Clemons</span>
 				<span>Gordon Crowther</span>
 				<span>Anaya Wickens</span>
+				<div>
+					<img src={logo} alt="" />
+				</div>
 			</div>
 		</div>
 	);
