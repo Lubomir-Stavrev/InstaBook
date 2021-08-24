@@ -69,7 +69,7 @@ export default {
                     title,
                     description,
                     imageUrl,
-                    uid: JSON.parse(localStorage.getItem('auth')).uid,
+                    uid: this.getCurrentUserData().userDbKey,
                     username: this.getCurrentUserData().username
                 })
             }).then(res => res.json())
@@ -81,7 +81,7 @@ export default {
                         description,
                         imageUrl,
                         postId: data.name,
-                        uid: JSON.parse(localStorage.getItem('auth')).uid,
+                        uid: this.getCurrentUserData().userDbKey,
                         username: this.getCurrentUserData().username
                     })
                 })
@@ -97,14 +97,14 @@ export default {
                 Object.entries(data).forEach(el => {
                     if (el[1].likedUsers) {
                         el[1].likedUsers.forEach(likedUserEl => {
-                            if (likedUserEl === this.getCurrentUserData().uid) {
+                            if (likedUserEl === this.getCurrentUserData().userDbKey) {
                                 el[1].isLiked = true;
                             }
                         })
 
                     }
                     el[1].postId = el[0];
-                    if (el[1].uid !== this.getCurrentUserData().uid) {
+                    if (el[1].uid !== this.getCurrentUserData().userDbKey) {
                         allPosts.push(el[1])
                     }
 
@@ -135,7 +135,6 @@ export default {
             .then(data => {
                 let likedUsers = [];
                 let isLiked = false;
-                console.log(data);
                 if (data.likedUsers) {
                     likedUsers = data.likedUsers;
                     likedUsers.forEach(likedUserId => {
@@ -297,7 +296,7 @@ export default {
                         Object.entries(user[1].posts).forEach(post => {
                             if (post[1].likedUsers) {
                                 post[1].likedUsers.forEach(likedUserEl => {
-                                    if (likedUserEl === this.getCurrentUserData().uid) {
+                                    if (likedUserEl === this.getCurrentUserData().userDbKey) {
                                         post[1].isLiked = true;
                                     }
                                 })
@@ -370,6 +369,35 @@ export default {
         }).catch(err => {
             console.log(err)
         })
+    },
+    followUser(userId) {
+        return fetch(db + `users/${userId}/followers/${this.getCurrentUserData().userDbKey}/.json`, {
+                method: "POST",
+                body: JSON.stringify({
+                    username: this.getCurrentUserData().username,
+                })
+            }).then(res => res.json())
+            .catch(err => { console.log(err) })
+            .then(data => {
+                return fetch(db + `users/${this.getCurrentUserData().userDbKey}/following/${userId}/.json`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        userId: userId,
+                    })
+                }).then(res => res.json())
+            })
+
+    },
+    unfollowUser(userId) {
+        return fetch(db + `users/${userId}/followers/${this.getCurrentUserData().userDbKey}/.json`, {
+                method: "DELETE"
+            }).then(res => res.json())
+            .catch(err => { console.log(err) })
+            .then(data => {
+                return fetch(db + `users/${this.getCurrentUserData().userDbKey}/following/${userId}/.json`, {
+                    method: "DELETE"
+                }).then(res => res.json())
+            })
     }
 
 }

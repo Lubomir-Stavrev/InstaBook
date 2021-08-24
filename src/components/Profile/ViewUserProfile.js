@@ -24,20 +24,33 @@ function ViewUserProfile(param, { history }) {
 			let data = await getProfileData(profileId);
 			if (data) {
 				setProfilePosts(data.posts);
-				console.log(data);
 				setProfileInfo({
 					username: data.username,
 					uid: data.uid,
-					profileImage: data.profileImage
+					profileImage: data.profileImage,
+					isFollowed: data.isFollowed,
+					followers: data.followers,
+					following: data.following,
+					postsNum: data.posts
+						? Object.entries(data?.posts)?.length
+						: 0
 				});
 			}
 		}
 		setProfile();
 	}, []);
 
-	function getProfileData(id) {
-		return services.getProfile(id).then((res) => {
-			return res;
+	async function getProfileData(id) {
+		return await services.getProfile(id).then(async (res) => {
+			if (res.followers) {
+				Object.entries(res.followers).forEach((el) => {
+					if (services.getCurrentUserData().userDbKey === el[0]) {
+						res.isFollowed = true;
+					}
+				});
+			}
+			console.log(await res);
+			return await res;
 		});
 	}
 	function handleViewPost(e) {
@@ -50,6 +63,20 @@ function ViewUserProfile(param, { history }) {
 		setPostId(postId);
 
 		dispatch(increment("block"));
+	}
+	function handleFollowProfile(e) {
+		let profileId = param.location.pathname.split("/")[2];
+		services.followUser(profileId).then(async (res) => {
+			let data = await getProfileData(profileId);
+			setProfileInfo(await data);
+		});
+	}
+	function handleUnfollowProfile(e) {
+		let profileId = param.location.pathname.split("/")[2];
+		services.unfollowUser(profileId).then(async (res) => {
+			let data = await getProfileData(profileId);
+			setProfileInfo(await data);
+		});
 	}
 	return (
 		<Fragment>
@@ -84,23 +111,57 @@ function ViewUserProfile(param, { history }) {
 								<button className="defaultButton">
 									Message
 								</button>
-								<button className="defaultButton">
-									Follow
-								</button>
+								{!profileInfo.isFollowed ? (
+									<button
+										onClick={(e) => handleFollowProfile(e)}
+										className="defaultButton">
+										Follow
+									</button>
+								) : (
+									<button
+										onClick={(e) =>
+											handleUnfollowProfile(e)
+										}
+										className="defaultButton">
+										Unfollow
+									</button>
+								)}
 							</div>
 						</div>
 						<div className={profileStyle.profileInfoFooter}>
-							<span>14 posts</span>
-							<span>104 followers</span>
-							<span>56 following</span>
+							<span>{profileInfo?.postsNum} posts</span>
+							<span>
+								{profileInfo?.followers
+									? Object.entries(profileInfo?.followers)
+											?.length
+									: 0}{" "}
+								followers
+							</span>
+							<span>
+								{profileInfo?.following
+									? Object.entries(profileInfo?.following)
+											?.length
+									: 0}{" "}
+								following
+							</span>
 						</div>
 						<h4>I have telonym can you beleive that</h4>
 					</div>
 				</div>
 				<div className={profileStyle.profileStats}>
-					<span>14 posts</span>
-					<span>104 followers</span>
-					<span>56 following</span>
+					<span>{profileInfo?.postsNum} posts</span>
+					<span>
+						{profileInfo?.followers
+							? Object.entries(profileInfo?.followers)?.length
+							: 0}{" "}
+						followers
+					</span>
+					<span>
+						{profileInfo?.following
+							? Object.entries(profileInfo?.following)?.length
+							: 0}{" "}
+						following
+					</span>
 				</div>
 				<div id={profileStyle.postsContainer}>
 					{profilePosts ? (
